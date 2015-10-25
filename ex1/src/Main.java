@@ -1,36 +1,37 @@
-import at.ac.tuwien.ac.heuoptws15.KPMPInstance;
-import at.ac.tuwien.ac.heuoptws15.KPMPSolutionWriter;
-import at.ac.tuwien.ac.heuoptws15.Solver;
+import at.ac.tuwien.ac.heuoptws15.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         System.out.println(System.getProperty("user.dir"));
-        KPMPInstance inst = KPMPInstance.readInstance(args[0]);
-        KPMPSolutionWriter writer = new KPMPSolutionWriter(inst.getK());
-        initInst(inst, writer);
-
-        for (int a = 0; a < inst.getNumVertices(); a++) {
-            for (int b : inst.getAdjacencyList().get(a)) {
-                if (b >= a) continue;
-
-                writer.addEdgeOnPage(a, b, 0);
-            }
+        for (String s : args) {
+            solveOne(s);
         }
-
-        //writer.print();
     }
 
-    private static void initInst(KPMPInstance instance, KPMPSolutionWriter writer) {
-        Solver solver = new Solver(instance);
+    public static void solveOne(String path) throws IOException {
+        KPMPInstance inst = KPMPInstance.readInstance(path);
+        for (int i = 0; i < 30; i++) {
+            Solver solver = getSolution(inst);
+            KPMPSolutionWriter writer = new KPMPSolutionWriter(inst.getK());
+            writer.setEdges(solver.getEdgePartition());
+            writer.setSpineOrder(solver.getOrdering());
+            File f = new File(path);
+            writer.write("solution/" + f.getName());
+            //writer.print();
+        }
+    }
+
+    private static Solver getSolution(KPMPInstance instance) {
+        Solver solver = new OtherSolver(instance);
         solver.solve();
         System.out.println("Crossings are: " + solver.getNumberOfCrossings());
-        List<Integer> spineOrder = new ArrayList<>();
-
-        writer.setSpineOrder(spineOrder);
+        return solver;
     }
 }

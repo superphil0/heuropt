@@ -5,12 +5,12 @@ import java.util.*;
 /**
  * Created by Philipp on 25.10.2015.
  */
-public class Solver {
-    private final KPMPInstance instance;
-    private List<Integer> spineOrder;
-    private int numberOfEdgeInGraph;
-    private HashMap<Integer, List<Edge>> edgePartition;
-    private List<Edge> edgeNotInPartition;
+public abstract class Solver {
+    protected final KPMPInstance instance;
+    protected List<Integer> spineOrder;
+    protected int numberOfEdgeInGraph;
+    protected HashMap<Integer, List<Edge>> edgePartition;
+    protected List<Edge> edgeNotInPartition;
 
     public Solver(KPMPInstance instance) {
         this.instance = instance;
@@ -28,54 +28,10 @@ public class Solver {
         return edgePartition;
     }
 
-    public void solve() {
-        for (int i = 0; i < instance.getNumVertices(); i++) {
-            spineOrder.add(i);
-        }
-        int k = instance.getK();
-        List<Integer> candidates = new LinkedList<>();
-        for (int i = 0; i < k; i++) {
-            candidates.add(i);
-            edgePartition.put(i, new LinkedList<>());
-        }
+    public abstract void solve();
 
-        boolean[][] matrix = instance.getAdjacencyMatrix();
-        int n = instance.getNumVertices();
-        int[] lookOrder = getIndexArray(n * n);
-        for (int i = 0; i < n * n; i++) {
-            int a = lookOrder[i] / n;
-            int b = lookOrder[i] % n;
-            if (matrix[a][b]) {
-                insert(new Edge(getVertexPos(a), getVertexPos(b)), k);
-            }
-        }
-        System.out.println("Crossing number will be at least " + edgeNotInPartition.size());
-        // distribute them evenly
-        for (Edge e : edgeNotInPartition) {
-            int selection = selectCandidate(candidates);
-            edgePartition.get(selection).add(e);
-        }
 
-    }
-
-    private void insert(Edge edge, int k) {
-        List<Integer> candidates = new LinkedList<>();
-
-        for (int i = 0; i < k; i++) {
-            if (!wouldCross(edge, i)) {
-                candidates.add(i);
-            }
-        }
-        if (candidates.size() == 0) {
-            edgeNotInPartition.add(edge);
-        } else {
-            int selection = candidates.get(0);//selectCandidate(candidates);
-            edgePartition.get(selection).add(edge);
-        }
-
-    }
-
-    private int selectCandidate(List<Integer> candidates) {
+    protected int selectCandidate(List<Integer> candidates) {
         double[] props = new double[candidates.size()];
         int sum = 0;
         // so we will always choose a candidate + 1
@@ -101,29 +57,12 @@ public class Solver {
         return selection;
     }
 
-    private int[] getIndexArray(int n) {
-        int[] array = new int[n];
-        for (int i = 0; i < n; i++) {
-            array[i] = i;
-        }
 
-        // new order
-        for (int i = n - 1; i > 0; i--) {
-            int j = (int) Math.floor(Math.random() * (i + 1));
-            int tmp = array[j];
-            array[j] = array[i];
-            array[i] = tmp;
-        }
-
-        return array;
-
-    }
-
-    private int getVertexPos(int x) {
+    protected int getVertexPos(int x) {
         return spineOrder.indexOf(x);
     }
 
-    private boolean wouldCross(Edge e, int page) {
+    protected boolean wouldCross(Edge e, int page) {
         List<Edge> ed = edgePartition.get(page);
         for (Edge edi : ed) {
             if (doEdgesCross(edi, e)) return true;
@@ -131,7 +70,7 @@ public class Solver {
         return false;
     }
 
-    private boolean doEdgesCross(Edge a, Edge b) {
+    protected boolean doEdgesCross(Edge a, Edge b) {
         Edge small = a;
         Edge large = b;
         if (large.A < small.A) {
