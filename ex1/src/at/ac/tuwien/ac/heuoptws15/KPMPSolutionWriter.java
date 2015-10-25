@@ -5,8 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class KPMPSolutionWriter {
 	private class PageEntry {
@@ -35,7 +37,14 @@ public class KPMPSolutionWriter {
 	public void addEdgeOnPage(int vertexA, int vertexB, int page) {
 		edgePartition.add(new PageEntry(Math.min(vertexA, vertexB), Math.max(vertexA, vertexB), page));
 	}
-	
+
+	public void setEdges(HashMap<Integer, List<Solver.Edge>> edges) {
+		for (Map.Entry<Integer, List<Solver.Edge>> e : edges.entrySet()) {
+			for (Solver.Edge a : e.getValue()) {
+				addEdgeOnPage(a.A, a.B, e.getKey());
+			}
+		}
+	}
 	public void write(String path) throws IOException {
 		try(Writer w = new BufferedWriter(new FileWriter(path))) {
 			write(w);

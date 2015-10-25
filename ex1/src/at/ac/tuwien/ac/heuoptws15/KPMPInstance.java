@@ -30,7 +30,7 @@ public class KPMPInstance {
 		for(int i=0; i<inst.numVertices; ++i) {
 			s.skip("(#.*[\r\n]+)*");
 			s.nextInt();
-			inst.adjacencyList.add(new ArrayList<Integer>());
+			inst.adjacencyList.add(new ArrayList<>());
 		}
 		
 		inst.adjacencyMatrix = new boolean[inst.numVertices][inst.numVertices];
@@ -63,6 +63,14 @@ public class KPMPInstance {
 
 	public List<List<Integer>> getAdjacencyList() {
 		return adjacencyList;
+	}
+
+	public int NumberOfEdges() {
+		int sum = 0;
+		for (List<Integer> list : adjacencyList) {
+			sum += list.size();
+		}
+		return sum;
 	}
 
 	public final boolean[][] getAdjacencyMatrix() {

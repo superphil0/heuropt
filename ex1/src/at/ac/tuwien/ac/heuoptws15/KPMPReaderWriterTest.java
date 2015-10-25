@@ -7,6 +7,7 @@ import java.util.List;
 public class KPMPReaderWriterTest {
 
 	public static void main(String[] args) throws FileNotFoundException {
+		System.out.println(System.getProperty("user.dir"));
 		KPMPInstance inst = KPMPInstance.readInstance(args[0]);
 		KPMPSolutionWriter writer = new KPMPSolutionWriter(inst.getK());
 		
