@@ -1,5 +1,7 @@
 package at.ac.tuwien.ac.heuoptws15;
 
+import com.sun.deploy.util.ArrayUtil;
+
 import java.util.*;
 
 /**
@@ -10,14 +12,21 @@ public abstract class Solver {
     protected List<Integer> spineOrder;
     protected int numberOfEdgeInGraph;
     protected HashMap<Integer, List<Edge>> edgePartition;
+    protected int[] vertexCrossingsCount;
     protected List<Edge> edgeNotInPartition;
-
+    public int crossings = 0;
+    private final boolean[] marked;
+    private int count = 0;
+    protected TreeMap<Integer, Integer> ordering;
     public Solver(KPMPInstance instance) {
         this.instance = instance;
-        spineOrder = new LinkedList<>();
+        spineOrder = new ArrayList<>();
         edgePartition = new HashMap<>();
         edgeNotInPartition = new ArrayList<>();
         numberOfEdgeInGraph = instance.NumberOfEdges();
+        vertexCrossingsCount = new int[instance.getNumVertices()];
+        marked = new boolean[instance.getNumVertices()];
+        ordering = new TreeMap<>();
     }
 
     public List<Integer> getOrdering() {
@@ -73,12 +82,15 @@ public abstract class Solver {
     protected boolean doEdgesCross(Edge a, Edge b) {
         Edge small = a;
         Edge large = b;
-        if (large.A < small.A) {
+        if (getVertexPos(large.A) < getVertexPos(small.A)) {
             Edge tmp = large;
             large = small;
             small = tmp;
         }
-        return (small.A < small.B && large.A < large.B && small.A < large.A && small.B < large.B);
+        return (getVertexPos(small.A) < getVertexPos(small.B) &&
+                getVertexPos(large.A) < getVertexPos(large.B) &&
+                getVertexPos(small.A) < getVertexPos(large.A) &&
+                getVertexPos(small.B) < getVertexPos(large.B));
     }
 
     public int getNumberOfCrossings() {
@@ -89,13 +101,49 @@ public abstract class Solver {
         return sum;
     }
 
+    public void countVertexCrossings() {
+        getNumberOfCrossings();
+        Arrays.fill(vertexCrossingsCount, 0);
+        for (List<Edge> edge : edgePartition.values()) {
+            for (Edge e : edge) {
+            }
+        }
+    }
+
+    private void depthFirstSearch(int v) {
+        marked[v] = true;
+        ordering.put(v, count);
+        count++;
+        for (int w : instance.getAdjacencyList().get(v)) {
+            if (!marked[w]) {
+                depthFirstSearch(w);
+            }
+        }
+    }
+
+
+    public void getOrderedVertices() {
+        ArrayList<Integer> vertices = new ArrayList<>();
+        for (int v = 0; v < instance.getNumVertices(); v++) {
+            vertices.add(v);
+        }
+        Collections.shuffle(vertices);
+
+        for (int v : vertices) {
+            if (!marked[v]) {
+                depthFirstSearch(v);
+            }
+        }
+    }
     public int getNumberOfCrossingsOnPage(int page) {
         List<Edge> ed = edgePartition.get(page);
         int crossings = 0;
         for (Edge a : ed) {
             for (Edge b : ed) {
                 if (a == b) continue;
-                if (doEdgesCross(a, b)) crossings++;
+                if (doEdgesCross(a, b)) {
+                    crossings++;
+                }
             }
         }
         return crossings;
@@ -108,6 +156,7 @@ public abstract class Solver {
             // check for smamller?
             A = a;
             B = b;
+
         }
     }
 }

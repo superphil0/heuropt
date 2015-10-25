@@ -6,15 +6,14 @@ import java.util.List;
 /**
  * Created by Philipp on 25.10.2015.
  */
-public class RandomGreedySolver extends Solver {
-    public RandomGreedySolver(KPMPInstance instance) {
+public class DeterministicSolver extends Solver {
+    public DeterministicSolver(KPMPInstance instance) {
         super(instance);
     }
 
     public void solve() {
-        getOrderedVertices();
         for (int i = 0; i < instance.getNumVertices(); i++) {
-            spineOrder.add(ordering.get(i));
+            spineOrder.add(i);
         }
         int k = instance.getK();
         List<Integer> candidates = new LinkedList<>();
@@ -27,40 +26,33 @@ public class RandomGreedySolver extends Solver {
         int n = instance.getNumVertices();
         int[] lookOrder = getIndexArray(n * n);
         for (int i = 0; i < n * n; i++) {
+            //System.out.println("at edge "+ i + " from " + n*n);
             int a = lookOrder[i] / n;
             int b = lookOrder[i] % n;
             if (matrix[a][b]) {
                 insert(new Edge(getVertexPos(a), getVertexPos(b)), k);
             }
         }
-        //System.out.println("Crossing number will be at least " + edgeNotInPartition.size());
         // distribute them evenly
+        int i = 0;
         for (Edge e : edgeNotInPartition) {
-            /*int argmin = 0;
-            int min = Integer.MAX_VALUE;
-            for (int i : candidates) {
-                int heur = WouldIncreaseBy(e, i);
-                if (heur < min) {
-                    min = heur;
-                    argmin = i;
-                }
-            }*/
-            int selection = selectCandidate(candidates);
+            i++;
+            //System.out.println("at edge " + i + " from " + edgeNotInPartition.size());
+            int selection = selector(candidates); // selectCandidate(candidates);
             edgePartition.get(selection).add(e);
-            for (Edge b : edgePartition.get(selection)) {
-                if (doEdgesCross(e, b)) {
-                    crossings++;
-                }
-            }
         }
     }
 
-    public int WouldIncreaseBy(Edge e, int page) {
-        int before = getNumberOfCrossingsOnPage(page);
-        edgePartition.get(page).add(e);
-        int after = getNumberOfCrossingsOnPage(page);
-        edgePartition.get(page).remove(e);
-        return after - before;
+    private int selector(List<Integer> candidates) {
+        int best = 99999999;
+        int argmin = 0;
+        for (int i : candidates) {
+            if (edgePartition.get(i).size() < best) {
+                best = edgePartition.get(i).size();
+                argmin = i;
+            }
+        }
+        return argmin;
     }
 
     protected void insert(Edge edge, int k) {
@@ -74,7 +66,7 @@ public class RandomGreedySolver extends Solver {
         if (candidates.size() == 0) {
             edgeNotInPartition.add(edge);
         } else {
-            int selection = selectCandidate(candidates); //candidates.get(0);//
+            int selection = selector(candidates);
             edgePartition.get(selection).add(edge);
         }
 
@@ -85,15 +77,6 @@ public class RandomGreedySolver extends Solver {
         for (int i = 0; i < n; i++) {
             array[i] = i;
         }
-
-        // new order
-        /*for (int i = n - 1; i > 0; i--) {
-            int j = (int) Math.floor(Math.random() * (i + 1));
-            int tmp = array[j];
-            array[j] = array[i];
-            array[i] = tmp;
-        }*/
         return array;
     }
-
 }

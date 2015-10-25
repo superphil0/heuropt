@@ -16,9 +16,6 @@ public class OtherSolver extends Solver {
     @Override
     public void solve() {
         // init with normal order
-        for (int i = 0; i < instance.getNumVertices(); i++) {
-            spineOrder.add(i);
-        }
         // init things
         int k = instance.getK();
         List<Integer> candidates = new LinkedList<>();
@@ -33,7 +30,12 @@ public class OtherSolver extends Solver {
         int best = 0;
         HashMap<Integer, List<Edge>> bestSol = null;
         List<Edge> bestNotSet = null;
-        for (int j = 0; j < 1; j++) {
+        for (int j = 0; j < 300; j++) {
+            spineOrder = new LinkedList<>();
+            int[] array = getIndexArray(instance.getNumVertices());
+            for (int i = 0; i < instance.getNumVertices(); i++) {
+                spineOrder.add(array[i]);
+            }
             for (int i = 0; i < n * n; i++) {
                 int a = lookOrder[i] / n;
                 int b = lookOrder[i] % n;
@@ -51,9 +53,9 @@ public class OtherSolver extends Solver {
                 edgePartition.put(c, new LinkedList<>());
             }
         }
-        System.out.println(best);
         edgePartition = bestSol;
         edgeNotInPartition = bestNotSet;
+        System.out.println("Crossing number will be at least " + edgeNotInPartition.size());
         for (Edge e : edgeNotInPartition) {
             int selection = selectCandidate(candidates);
             edgePartition.get(selection).add(e);
