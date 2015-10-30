@@ -158,7 +158,6 @@ public abstract class Solver {
         public int A, B;
 
         public Edge(int a, int b) {
-            // check for smamller?
             A = a;
             B = b;
 
