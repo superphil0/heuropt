@@ -9,7 +9,7 @@ import java.util.*;
  */
 public abstract class Solver {
     protected final KPMPInstance instance;
-    protected List<Integer> spineOrder;
+    protected int[] spineOrder;
     protected int numberOfEdgeInGraph;
     protected HashMap<Integer, List<Edge>> edgePartition;
     protected int[] vertexCrossingsCount;
@@ -20,7 +20,7 @@ public abstract class Solver {
     protected TreeMap<Integer, Integer> ordering;
     public Solver(KPMPInstance instance) {
         this.instance = instance;
-        spineOrder = new ArrayList<>();
+        spineOrder = new int[instance.getNumVertices()];
         edgePartition = new HashMap<>();
         edgeNotInPartition = new ArrayList<>();
         numberOfEdgeInGraph = instance.NumberOfEdges();
@@ -30,7 +30,12 @@ public abstract class Solver {
     }
 
     public List<Integer> getOrdering() {
-        return spineOrder;
+        LinkedList<Integer> list = new LinkedList<>();
+        for(int i = 0; i < spineOrder.length; i++)
+        {
+            list.add(spineOrder[i]);
+        }
+        return list;
     }
 
     public HashMap<Integer, List<Edge>> getEdgePartition() {
@@ -68,7 +73,7 @@ public abstract class Solver {
 
 
     protected int getVertexPos(int x) {
-        return spineOrder.indexOf(x);
+        return spineOrder[x];
     }
 
     protected boolean wouldCross(Edge e, int page) {

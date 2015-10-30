@@ -13,7 +13,7 @@ public class DeterministicSolver extends Solver {
 
     public void solve() {
         for (int i = 0; i < instance.getNumVertices(); i++) {
-            spineOrder.add(i);
+            spineOrder[i] = ordering.get(i);
         }
         int k = instance.getK();
         List<Integer> candidates = new LinkedList<>();

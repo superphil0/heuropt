@@ -14,7 +14,7 @@ public class RandomGreedySolver extends Solver {
     public void solve() {
         getOrderedVertices();
         for (int i = 0; i < instance.getNumVertices(); i++) {
-            spineOrder.add(ordering.get(i));
+            spineOrder[i] = ordering.get(i);
         }
         int k = instance.getK();
         List<Integer> candidates = new LinkedList<>();

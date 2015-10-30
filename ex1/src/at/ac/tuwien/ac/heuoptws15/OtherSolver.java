@@ -31,10 +31,10 @@ public class OtherSolver extends Solver {
         HashMap<Integer, List<Edge>> bestSol = null;
         List<Edge> bestNotSet = null;
         for (int j = 0; j < 300; j++) {
-            spineOrder = new LinkedList<>();
+            spineOrder = new int[instance.getNumVertices()];
             int[] array = getIndexArray(instance.getNumVertices());
             for (int i = 0; i < instance.getNumVertices(); i++) {
-                spineOrder.add(array[i]);
+                spineOrder[i] = array[i];
             }
             for (int i = 0; i < n * n; i++) {
                 int a = lookOrder[i] / n;

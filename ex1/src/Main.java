@@ -18,7 +18,7 @@ public class Main {
     public static void solveOne(String path) throws IOException {
         KPMPInstance inst = KPMPInstance.readInstance(path);
         int best = 999999999;
-        int numRuns = 5;
+        int numRuns = 30;
         double mean = 0, sd = 0;
         KPMPSolutionWriter writer = null;
         int[] res = new int[numRuns];
