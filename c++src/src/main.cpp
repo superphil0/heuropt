@@ -156,6 +156,7 @@ int main(int argc, char** argv)
         while (maxTotalCrossings > totalCrossings) {
             // mySolution.str("");
             maxTotalCrossings = totalCrossings;
+            solution->clearSolution();
             edgeswap.swap(3);
             // mySolution << "solution_" << iteration++;
             // solution->write(mySolution.str());
@@ -166,7 +167,7 @@ int main(int argc, char** argv)
 
 
         // solution->setSpineOrder(finalSpineOrder);
-        solution->clearSolution();
+
         solution->write("solutionswap");
 
 
