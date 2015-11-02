@@ -4,7 +4,7 @@
 
 #include <string>
 #include <vector>
-
+#include <algorithm>
 using namespace std;
 
 struct PageEntry {
@@ -36,6 +36,7 @@ public:
 
 	void setSpineOrder(vector<unsigned int> spineOrder) {
 		this->spineOrder = spineOrder;
+		
 	}
 
 	void addEdgeOnPage(unsigned int vertexA, unsigned int vertexB, unsigned int page) {

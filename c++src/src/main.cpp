@@ -45,7 +45,7 @@ int main(int argc, char** argv)
 {
     // default values
     std::string mode("unset");
-    std::string file("../instances/automatic-1.txt");
+    std::string file("../../c++src/instances/automatic-6.txt");
 
     //process input params
     for(int i = 1; i < argc; ++i) {
@@ -73,7 +73,6 @@ int main(int argc, char** argv)
     std::shared_ptr<KPMPInstance> instance(KPMPInstance::readInstance(file));
     // transform mode to lower string
     std::transform(mode.begin(), mode.end(), mode.begin(), ::tolower);
-
 
     unsigned int numVertices = instance->getNumVertices();
     unsigned int booksize = instance->getK();
@@ -107,8 +106,8 @@ int main(int argc, char** argv)
 
         // populate edgeList and create node order
 
-        Node* tmpItStart;
-        Node* tmpItEnd;
+        Node* tmpItStart = nullptr;
+        Node* tmpItEnd = nullptr;
         for (unsigned int startNode = 0; startNode < adjList.size(); startNode++) {
             for (unsigned int i = 0; i < adjList[startNode].size(); i++) {
                 if (startNode < adjList[startNode][i]) {
@@ -180,5 +179,6 @@ int main(int argc, char** argv)
     }
 
     std::cout << "CPU Time: " << getCPUtime() << std::endl;
+	system("pause");
     return 0;
 } // main
