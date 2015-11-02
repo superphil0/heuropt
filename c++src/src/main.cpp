@@ -127,10 +127,13 @@ int main(int argc, char** argv)
         }
 
         // create deterministic instance
-        Deterministic xxxtest(solution, &spine, &edgeList, &book, &totalCrossings);
+        Deterministic deter(solution, &spine, &edgeList, &book, &totalCrossings);
         // sort spine in descending node order
 
-        xxxtest.sortSpine(-1);
+        .sortSpineDFS();
+
+        deter.writeSpine();
+        //deter.sortSpine(-1);
 
         // fill spineorder for sulution
         vector<unsigned int> finalSpineOrder(numVertices);
@@ -138,10 +141,10 @@ int main(int argc, char** argv)
             finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
         }
         // sort edges with descending length
-        xxxtest.sortEdges(-1);
-        // xxxtest.writeSpine();
-        // xxxtest.writeEdgeList();
-        xxxtest.h1();
+        deter.sortEdges(-1);
+        // deter.writeSpine();
+        // deter.writeEdgeList();
+        deter.h1();
 
         // for (unsigned int e=0; e < edgeList.size(); e++) {
         //     cout << "final edge state " << edgeList[e].getStartNode()->getName() << " - " << edgeList[e].getEndNode()->getName() << " crossings " << edgeList[e].getCrossings() << " on Page " << edgeList[e].getPage() <<endl;

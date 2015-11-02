@@ -42,6 +42,8 @@ public:
 
     void sortSpine(int order);
 
+    void sortSpineDFS();
+
     void sortEdges(int order);
 
     void h1();
