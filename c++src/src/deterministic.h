@@ -42,6 +42,8 @@ public:
 
     void sortSpine(int order);
 
+    void DFS(unsigned int start, vector<unsigned int>* nodes, vector<pair<unsigned int, unsigned int>>* spineOrder);
+
     void sortSpineDFS();
 
     void sortEdges(int order);

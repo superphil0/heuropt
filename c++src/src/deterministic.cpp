@@ -56,6 +56,31 @@ void Deterministic::sortEdges(int order) {
     }
 }
 
+
+void Deterministic::DFS(unsigned int start, vector<unsigned int>* nodes, vector<pair<unsigned int, unsigned int>>* spineOrder) {
+    //spineOrder.push_back(start);
+    // cout << "test " << start << endl;
+    nodes->erase(find(nodes->begin(), nodes->end(), start));
+    unsigned int pos = spineOrder->size();
+    spineOrder->push_back(make_pair(pos, start));
+    for (unsigned int e = 0; e < edgeList->size(); e++) {
+        unsigned int testStart = min((*edgeList)[e].getStartNode()->getName(), (*edgeList)[e].getEndNode()->getName());
+        unsigned int testEnd = max((*edgeList)[e].getStartNode()->getName(), (*edgeList)[e].getEndNode()->getName());
+        // cout << "test " << testStart << "-" << testEnd << endl;
+
+        if ( (testStart == start) &&
+             (find(nodes->begin(), nodes->end(), testEnd) != nodes->end()) ) {
+
+            // cout << "add " << testEnd << endl;
+            DFS(testEnd, nodes, spineOrder);
+        } else if ((testEnd == start) &&
+             (find(nodes->begin(), nodes->end(), testStart) != nodes->end())) {
+                //  cout << "add " << testStart << endl;
+                 DFS(testStart, nodes, spineOrder);
+        }
+    }
+}
+
 void Deterministic::sortSpineDFS() {
 
     vector<unsigned int> nodes;
@@ -66,34 +91,17 @@ void Deterministic::sortSpineDFS() {
         nodes.push_back(i);
     }
     random_shuffle(nodes.begin(), nodes.end());
-    unsigned int start;
-    bool success;
-    unsigned int pos = 0;
-    start = nodes[0];
-    spineOrder.push_back(make_pair(pos++, start));
-    nodes.erase(nodes.begin());
-    while(nodes.size() != 0) {
-        success = false;
-        for (unsigned int e = 0; e < edgeList->size(); e++) {
-            if ( ((*edgeList)[e].getStartNode()->getName() == start) &&
-                 (find(nodes.begin(), nodes.end(), (*edgeList)[e].getEndNode()->getName()) != nodes.end()) ) {
-                start = (*edgeList)[e].getEndNode()->getName();
-                nodes.erase(find(nodes.begin(), nodes.end(), start));
-                spineOrder.push_back(make_pair(pos++, start));
-                success = true;
-                break;
-            }
-        }
-        // if no successor was found take next in order
-        if (!success) {
-            start = nodes[0];
-            spineOrder.push_back(make_pair(pos++, start));
-            nodes.erase(nodes.begin());
-        }
+    // for (unsigned int i = 0; i < nodes.size(); i++) {
+    //     cout << nodes[i] << " ";
+    // }
+    // cout << endl;
+    while (nodes.size() != 0) {
+        DFS(nodes[0], &nodes, &spineOrder);
     }
 
-    for (unsigned int n = 0; n < spine->size(); n++) {
 
+    for (unsigned int n = 0; n < spine->size(); n++) {
+        //cout << "pos " << spineOrder[n].first << " name " << spineOrder[n].second << endl;
         (*spine)[spineOrder[n].second].setPosition(n);
     }
 
