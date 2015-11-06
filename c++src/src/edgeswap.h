@@ -17,26 +17,25 @@ using namespace std;
 class Edgeswap {
 
 private:
-    KPMPSolutionWriter* solution;
-    vector<Node>* spine;
-    vector<Edge>* edgeList;
-    vector<Page>* book;
-    unsigned int* totalCrossings;
-
+	KPMPSolutionWriter* solution;
+	vector<Node>* spine;
+	vector<Edge>* edgeList;
+	vector<Page>* book;
+	unsigned int* totalCrossings;
 public:
 	Edgeswap(KPMPSolutionWriter* solution, vector<Node>* spine, vector<Edge>* edgeList, vector<Page>* book, unsigned int* totalCrossings) {
-        this->solution = solution;
-        this->spine = spine;
-        this->edgeList = edgeList;
-        this->book = book;
-        this->totalCrossings = totalCrossings;
+		this->solution = solution;
+		this->spine = spine;
+		this->edgeList = edgeList;
+		this->book = book;
+		this->totalCrossings = totalCrossings;
 	}
 
 	~Edgeswap() {
 
 	}
 
-    void swap(unsigned int noEdgesToSwap);
+	void swap(unsigned int noEdgesToSwap);
 
 
 };

@@ -5,6 +5,7 @@
 #include "node.h"
 #include "deterministic.h"
 #include "edgeswap.h"
+#include "nodeswap.h"
 
 #include <memory>
 #include <string>
@@ -45,7 +46,11 @@ int main(int argc, char** argv)
 {
     // default values
     std::string mode("unset");
+#ifdef __linux__
     std::string file("../instances/automatic-1.txt");
+#else
+    std::string file("../../c++src/instances/automatic-1.txt");
+#endif
 
     //process input params
     for(int i = 1; i < argc; ++i) {
@@ -107,8 +112,8 @@ int main(int argc, char** argv)
 
         // populate edgeList and create node order
 
-        Node* tmpItStart;
-        Node* tmpItEnd;
+        Node* tmpItStart = nullptr;
+		Node* tmpItEnd = nullptr;
         for (unsigned int startNode = 0; startNode < adjList.size(); startNode++) {
             for (unsigned int i = 0; i < adjList[startNode].size(); i++) {
                 if (startNode < adjList[startNode][i]) {
@@ -151,16 +156,29 @@ int main(int argc, char** argv)
         // }
 
         Edgeswap edgeswap(solution, &spine, &edgeList, &book, &totalCrossings);
+        Nodeswap nodeswap(solution, &spine, &edgeList, &book, &totalCrossings, &adjList);
         solution->setSpineOrder(finalSpineOrder);
         solution->write("solution");
         solution->clearSolution();
         unsigned int maxTotalCrossings = UINT_MAX;
         unsigned int iteration = 0;
-        while (maxTotalCrossings > totalCrossings) {
+		// termination condition
+        while (maxTotalCrossings > totalCrossings || iteration < 100) {
             // mySolution.str("");
+			if (maxTotalCrossings > totalCrossings) {
+			}
+				iteration++;
             maxTotalCrossings = totalCrossings;
             solution->clearSolution();
+
+			nodeswap.swap(3);
             edgeswap.swap(3);
+			vector<unsigned int> finalSpineOrder(numVertices);
+			for (unsigned int i = 0; i <  spine.size(); i++) {
+				finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
+			}
+			solution->setSpineOrder(finalSpineOrder);
+			cout << "iterations " << iteration << endl;
             // mySolution << "solution_" << iteration++;
             // solution->write(mySolution.str());
             // solution->clearSolution();
@@ -171,7 +189,7 @@ int main(int argc, char** argv)
 
         // solution->setSpineOrder(finalSpineOrder);
 
-        solution->write("solutionswap");
+        solution->write("solutionswap.txt");
 
 
 
@@ -184,5 +202,6 @@ int main(int argc, char** argv)
     }
 
     std::cout << "CPU Time: " << getCPUtime() << std::endl;
+	std::cin.get();
     return 0;
 } // main

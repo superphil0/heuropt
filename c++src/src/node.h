@@ -10,6 +10,7 @@ private:
 	unsigned int name;
 	unsigned int edgeCount;
 	int pos;
+	unsigned int crossings;
 
 
 public:
@@ -21,12 +22,18 @@ public:
         this->name = name;
 		this->edgeCount = edgeCount;
 		this->pos = pos;
+		this->crossings = 0;
     }
 
 	~Node() {
 
 	}
-
+	void setCrossings(unsigned int crossings) {
+		this->crossings = crossings;
+	}
+	unsigned int getCrossings() const {
+		return crossings;
+	}
 	void setNode(unsigned int name, unsigned int edgeCount){
         this->name = name;
 		this->edgeCount = edgeCount;

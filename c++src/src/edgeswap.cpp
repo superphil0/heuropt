@@ -50,7 +50,8 @@ void Edgeswap::swap(unsigned int noEdgesToSwap) {
 
         // better solution for edge found
         if (pages.size() != 0) {
-            random_shuffle(pages.begin(), pages.end());
+
+            //random_shuffle(pages.begin(), pages.end());
             // pages[0] - first element in shuffled vector
             (*book)[pages[0]].addEdge((*edgeList)[e]);
             (*edgeList)[e].setPage(pages[0]);
