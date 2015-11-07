@@ -35,8 +35,15 @@ public:
 
 	}
 
-	void swap(unsigned int noEdgesToSwap);
+	void swap(unsigned int noEdgesToSwap, unsigned int stepFunction);
 
+	void bestImprovement(unsigned int noEdgesToSwap);
+
+	void firstImprovement(unsigned int noEdgesToSwap);
+
+	void randomImprovement(unsigned int noEdgesToSwap);
+
+	void calculateCrossings();
 
 };
 

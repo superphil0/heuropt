@@ -163,22 +163,28 @@ int main(int argc, char** argv)
         unsigned int maxTotalCrossings = UINT_MAX;
         unsigned int iteration = 0;
 		// termination condition
-        while (maxTotalCrossings > totalCrossings || iteration < 100) {
+        while (maxTotalCrossings > totalCrossings /*|| iteration < 2*/) {
             // mySolution.str("");
-			if (maxTotalCrossings > totalCrossings) {
-			}
-				iteration++;
+			// if (maxTotalCrossings > totalCrossings) {
+			// }
+			// 	iteration++;
             maxTotalCrossings = totalCrossings;
             solution->clearSolution();
 
-			nodeswap.swap(3);
-            edgeswap.swap(3);
-			vector<unsigned int> finalSpineOrder(numVertices);
-			for (unsigned int i = 0; i <  spine.size(); i++) {
-				finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
-			}
-			solution->setSpineOrder(finalSpineOrder);
-			cout << "iterations " << iteration << endl;
+			// nodeswap.swap(3);
+            // deter.writeSpine();
+            // deter.writeEdgeList();
+            // noEdgesToSwap, method
+            // method 1 = bestImprovement
+            // method 2 = firstImprovement
+            // method 3 = randomImprovement
+            edgeswap.swap(3, 1);
+			// vector<unsigned int> finalSpineOrder(numVertices);
+			// for (unsigned int i = 0; i <  spine.size(); i++) {
+			// 	finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
+			// }
+			// solution->setSpineOrder(finalSpineOrder);
+			// cout << "iterations " << iteration << endl;
             // mySolution << "solution_" << iteration++;
             // solution->write(mySolution.str());
             // solution->clearSolution();
@@ -187,7 +193,7 @@ int main(int argc, char** argv)
 
 
 
-        // solution->setSpineOrder(finalSpineOrder);
+        solution->setSpineOrder(finalSpineOrder);
 
         solution->write("solutionswap.txt");
 
