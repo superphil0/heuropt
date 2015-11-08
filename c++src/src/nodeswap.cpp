@@ -47,6 +47,9 @@ void Nodeswap::swap(int select, int mode) {
 	srand(time(NULL));
 	*totalCrossings = 0;
 	int edgesPage = 0;
+	for (unsigned int node = 0; node < spine->size(); node++) {
+		spine->at(node).setCrossings(0);
+	}
 	// calculate crossings per node
 	for (unsigned int e = 0; e < edgeList->size(); e++) {
 		edgesPage = (*edgeList)[e].getPage();
@@ -90,7 +93,7 @@ void Nodeswap::swap(int select, int mode) {
 	{
 		// select which node to swap before
 		startValue = rand() % nodes;
-		endValue = startValue+1;
+		endValue = startValue + 1;
 	}
 	// because they are sorted after quality
 	for (int node = startValue; node < endValue; node++)
@@ -98,7 +101,7 @@ void Nodeswap::swap(int select, int mode) {
 		for (int i = 0; i < nodes; i++)
 		{
 			if (i == node) continue;
-			unsigned int result = crossingsWithNodeOnPos(spineRef.at(node), i,mode);
+			unsigned int result = crossingsWithNodeOnPos(spineRef.at(node), i, mode);
 			if (result < crossingsBest)
 			{
 				crossingsBest = result;
