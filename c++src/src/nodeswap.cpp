@@ -9,6 +9,14 @@
 bool sortNodesByEdgeCrossings(Node* first, Node* second) {
 	return first->getCrossings() > second->getCrossings();
 }
+void swapNodes(Node* node, int position, vector<Node>* spine)
+{
+	int oldPos = node->getPosition();
+	auto it = find_if(spine->begin(), spine->end(), [&position](const Node& obj) {return obj.getPosition() == position;});
+	Node* otherNode = &(*it);
+	node->setPosition(position);
+	otherNode->setPosition(oldPos);
+}
 void changeOrder(Node* node, int position, vector<Node>* spine)
 {
 	int oldPos = node->getPosition();
@@ -31,7 +39,7 @@ void changeOrder(Node* node, int position, vector<Node>* spine)
 	}
 	node->setPosition(position);
 }
-void Nodeswap::swap(unsigned int noNodesToSwap) {
+void Nodeswap::swap(int select, int mode) {
 
 	// init variables for page checking
 	vector<unsigned int> pages;
@@ -60,37 +68,73 @@ void Nodeswap::swap(unsigned int noNodesToSwap) {
 		spineRef.push_back(&spine->at(i));
 	}
 	sort(spineRef.begin(), spineRef.end(), sortNodesByEdgeCrossings);
+
 	// always only try for node that has the most edgecrossings
 	// alternative: has the most edges that have crossings
 	int bestPos = 0;
-	int crossingsBest = INT_MAX;
+	int crossingsBest = oldBest;
 	int bestNode = 0;
-	for (int i = 0; i < nodes; i++)
+	int endValue = 1;
+	int startValue = 0;
+	if (select == 1)
 	{
-		unsigned int result = crossingsWithNodeOnPos(spineRef.at(0), i);
-		if (result < crossingsBest)
+		endValue = nodes;
+		startValue = 0;
+	}
+	else if (select == 2)
+	{
+		endValue = 1;
+		startValue = 0;
+	}
+	else if (select == 3)
+	{
+		// select which node to swap before
+		startValue = rand() % nodes;
+		endValue = startValue+1;
+	}
+	// because they are sorted after quality
+	for (int node = startValue; node < endValue; node++)
+	{
+		for (int i = 0; i < nodes; i++)
 		{
-			crossingsBest = result;
-			bestPos = i;
+			if (i == node) continue;
+			unsigned int result = crossingsWithNodeOnPos(spineRef.at(node), i,mode);
+			if (result < crossingsBest)
+			{
+				crossingsBest = result;
+				bestPos = i;
+				bestNode = node;
+				break;
+			}
 		}
 	}
-	changeOrder(spineRef.at(0), bestPos, spine);
+	if (crossingsBest == oldBest) return;
+	if (mode == 1)
+	{
+		swapNodes(spineRef.at(bestNode), bestPos, spine);
+	}
+	else {
+		changeOrder(spineRef.at(bestNode), bestPos, spine);
+	}
 	cout << "crossings before: " << oldBest << " new best: " << crossingsBest << endl;
 }
 
 // starts at 0 and ends at len - -1
-unsigned int Nodeswap::crossingsWithNodeOnPos(Node* node, int position)
+unsigned int Nodeswap::crossingsWithNodeOnPos(Node* node, int position, int mode)
 {
 	if (position >= spine->size()) return UINT_MAX;
 	int edgesPage = 0;
-	int c = 0;
 	int oldPos = node->getPosition();
-	Node* otherNode = &spine->at(position);
-	// swap
-	node->setPosition(position);
-	otherNode->setPosition(oldPos);
-	// or insert
-	//changeOrder(node, position, spine);
+	int c = 0;
+	if (mode == 1)
+	{
+		// swap
+		swapNodes(node, position, spine);
+	}
+	else {
+		// or insert
+		changeOrder(node, position, spine);
+	}
 	// calc  new crossing value
 	*totalCrossings = 0;
 	for (unsigned int e = 0; e < edgeList->size(); e++) {
@@ -99,10 +143,14 @@ unsigned int Nodeswap::crossingsWithNodeOnPos(Node* node, int position)
 		*totalCrossings += c;
 	}
 	*totalCrossings /= 2;
-	// insert
-	//changeOrder(node, oldPos, spine);
-	// swap
-	node->setPosition(oldPos);
-	otherNode->setPosition(position);
+	if (mode == 1)
+	{
+		// swap
+		swapNodes(node, oldPos, spine);
+	}
+	else {
+		// or insert
+		changeOrder(node, oldPos, spine);
+	}
 	return *totalCrossings;
 }

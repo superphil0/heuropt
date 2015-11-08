@@ -37,8 +37,8 @@ public:
 
 	}
 
-	unsigned int crossingsWithNodeOnPos(Node* node, int position);
-    void swap(unsigned int noNodesSwap);
+	unsigned int crossingsWithNodeOnPos(Node* node, int position, int mode);
+    void swap(int nodeToSelect, int mode);
 
 
 };

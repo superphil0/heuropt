@@ -163,22 +163,28 @@ int main(int argc, char** argv)
         unsigned int maxTotalCrossings = UINT_MAX;
         unsigned int iteration = 0;
 		// termination condition
-        while (maxTotalCrossings > totalCrossings || iteration < 10) {
+        while (maxTotalCrossings > totalCrossings /*|| iteration < 50*/) {
             // mySolution.str("");
 			// if (maxTotalCrossings > totalCrossings) {
 			// }
 			 	iteration++;
             maxTotalCrossings = totalCrossings;
             solution->clearSolution();
-
-			nodeswap.swap(3);
+			// select
+            // method 1 = bestImprovement look at all nodes and improve best
+            // method 2 = firstImprovement take node with max edgecrossing
+            // method 3 = randomImprovement take random node
+			// mode
+			// mode 1 = swapnodes
+			// mode 2 = insert node somewhere
+			nodeswap.swap(2,1);
             // deter.writeSpine();
             // deter.writeEdgeList();
             // noEdgesToSwap, method
             // method 1 = bestImprovement
             // method 2 = firstImprovement
             // method 3 = randomImprovement
-            edgeswap.swap(3, 1);
+            edgeswap.swap(10, 1);
 			// vector<unsigned int> finalSpineOrder(numVertices);
 			// for (unsigned int i = 0; i <  spine.size(); i++) {
 			// 	finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
@@ -191,6 +197,9 @@ int main(int argc, char** argv)
 
         }
 
+        for (unsigned int i = 0; i <  spine.size(); i++) {
+            finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
+        }
 
 
         solution->setSpineOrder(finalSpineOrder);
