@@ -165,7 +165,7 @@ int main(int argc, char** argv)
         unsigned int iteration = 0;
 		// termination condition
 
-        while (maxTotalCrossingsNodes > totalCrossings /*|| iteration < 50*/) {
+        while (maxTotalCrossingsNodes > totalCrossings || iteration < 50) {
             while(maxTotalCrossingsEdges > totalCrossings) {
                 maxTotalCrossingsEdges = totalCrossings;
 
