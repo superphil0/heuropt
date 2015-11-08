@@ -160,16 +160,21 @@ int main(int argc, char** argv)
         solution->setSpineOrder(finalSpineOrder);
         solution->write("solution");
         solution->clearSolution();
-        unsigned int maxTotalCrossings = UINT_MAX;
+        unsigned int maxTotalCrossingsEdges = UINT_MAX;
+        unsigned int maxTotalCrossingsNodes = UINT_MAX;
         unsigned int iteration = 0;
 		// termination condition
-        while (maxTotalCrossings > totalCrossings /*|| iteration < 50*/) {
-            // mySolution.str("");
-			// if (maxTotalCrossings > totalCrossings) {
-			// }
-			 	iteration++;
-            maxTotalCrossings = totalCrossings;
-            solution->clearSolution();
+
+        while (maxTotalCrossingsNodes > totalCrossings /*|| iteration < 50*/) {
+            while(maxTotalCrossingsEdges > totalCrossings) {
+                maxTotalCrossingsEdges = totalCrossings;
+
+                edgeswap.swap(3, 1);
+
+                iteration++;
+            }
+
+            //
 			// select
             // method 1 = bestImprovement look at all nodes and improve best
             // method 2 = firstImprovement take node with max edgecrossing
@@ -177,14 +182,18 @@ int main(int argc, char** argv)
 			// mode
 			// mode 1 = swapnodes
 			// mode 2 = insert node somewhere
-			nodeswap.swap(2,1);
+            maxTotalCrossingsNodes = maxTotalCrossingsEdges;
+            cout << "edgecossings " << maxTotalCrossingsEdges << endl;
+            nodeswap.swap(2,1);
+            cout << "nodecossings " << totalCrossings << endl;
+
             // deter.writeSpine();
             // deter.writeEdgeList();
             // noEdgesToSwap, method
             // method 1 = bestImprovement
             // method 2 = firstImprovement
             // method 3 = randomImprovement
-            edgeswap.swap(10, 1);
+
 			// vector<unsigned int> finalSpineOrder(numVertices);
 			// for (unsigned int i = 0; i <  spine.size(); i++) {
 			// 	finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
@@ -197,8 +206,14 @@ int main(int argc, char** argv)
 
         }
 
+        solution->clearSolution();
+        
         for (unsigned int i = 0; i <  spine.size(); i++) {
             finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
+        }
+
+        for (unsigned int e = 0; e < edgeList.size(); e++) {
+            solution->addEdgeOnPage(edgeList[e].getStartNode()->getName(), edgeList[e].getEndNode()->getName(),  edgeList[e].getPage());
         }
 
 
