@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 #ifdef __linux__
     std::string file("../instances/automatic-1.txt");
 #else
-    std::string file("../../c++src/instances/automatic-1.txt");
+    std::string file("../../c++src/instances/automatic-3.txt");
 #endif
 
     //process input params
@@ -163,15 +163,15 @@ int main(int argc, char** argv)
         unsigned int maxTotalCrossings = UINT_MAX;
         unsigned int iteration = 0;
 		// termination condition
-        while (maxTotalCrossings > totalCrossings /*|| iteration < 2*/) {
+        while (maxTotalCrossings > totalCrossings || iteration < 10) {
             // mySolution.str("");
 			// if (maxTotalCrossings > totalCrossings) {
 			// }
-			// 	iteration++;
+			 	iteration++;
             maxTotalCrossings = totalCrossings;
             solution->clearSolution();
 
-			// nodeswap.swap(3);
+			nodeswap.swap(3);
             // deter.writeSpine();
             // deter.writeEdgeList();
             // noEdgesToSwap, method
