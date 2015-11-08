@@ -207,7 +207,7 @@ int main(int argc, char** argv)
         }
 
         solution->clearSolution();
-        
+
         for (unsigned int i = 0; i <  spine.size(); i++) {
             finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
         }
@@ -232,6 +232,6 @@ int main(int argc, char** argv)
     }
 
     std::cout << "CPU Time: " << getCPUtime() << std::endl;
-	std::cin.get();
+	//std::cin.get();
     return 0;
 } // main
