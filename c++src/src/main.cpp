@@ -165,7 +165,7 @@ int main(int argc, char** argv)
         unsigned int iteration = 0;
 		// termination condition
 
-        while (maxTotalCrossingsNodes > totalCrossings /*|| iteration < 50*/) {
+        while (maxTotalCrossingsNodes > totalCrossings || iteration < 50) {
             while(maxTotalCrossingsEdges > totalCrossings) {
                 maxTotalCrossingsEdges = totalCrossings;
 
@@ -232,6 +232,6 @@ int main(int argc, char** argv)
     }
 
     std::cout << "CPU Time: " << getCPUtime() << std::endl;
-	std::cin.get();
+	//std::cin.get();
     return 0;
 } // main
