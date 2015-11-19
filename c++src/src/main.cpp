@@ -208,7 +208,7 @@ int main(int argc, char** argv)
         }
 
         solution->clearSolution();
-        
+
         for (unsigned int i = 0; i <  spine.size(); i++) {
             finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
         }
