@@ -12,6 +12,7 @@
 #include <cstring>
 #include <sstream>
 #include <iostream>
+#include <ctime>
 #include <algorithm>
 #include <list>
 #include <climits>
@@ -164,8 +165,8 @@ int main(int argc, char** argv)
         unsigned int maxTotalCrossingsNodes = UINT_MAX;
         unsigned int iteration = 0;
 		// termination condition
-
-        while (maxTotalCrossingsNodes > totalCrossings || iteration < 50) {
+		int start = clock();
+        while (maxTotalCrossingsNodes > totalCrossings) {
             while(maxTotalCrossingsEdges > totalCrossings) {
                 maxTotalCrossingsEdges = totalCrossings;
 
@@ -217,10 +218,11 @@ int main(int argc, char** argv)
         }
 
 
+		int time = clock()-start;
         solution->setSpineOrder(finalSpineOrder);
 
         solution->write("solutionswap.txt");
-
+		cout << "time needed: " << time*1000/CLOCKS_PER_SEC << " ms"<< endl;
 
 
     } else if(mode == "grasp") {
