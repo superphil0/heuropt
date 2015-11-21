@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "edgeswap.h"
+#include "utilities.h"
 #include <time.h>
 #include <climits>
 
@@ -150,7 +151,9 @@ void Edgeswap::swap(unsigned int noEdgesToSwap, unsigned int stepFunction) {
 
 
 
-    calculateCrossings();
+    //calculateCrossings();
+    Utilities::calcuteAllEdgeCrossing(edgeList, book);
+    Utilities::calculateNodeCrossings(edgeList);
     // int edgesPage = 0;
     // // calcute the crossing number for each edge -> total number of crossings
     // // and write solution

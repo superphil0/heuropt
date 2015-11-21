@@ -174,6 +174,10 @@ int main(int argc, char** argv)
 
                 iteration++;
             }
+                for (int i = 0; i < edgeList.size(); i++) {
+                    cout << edgeList[i].getCrossings() << " ";
+                }
+                cout << endl;
 
             //
 			// select
@@ -187,6 +191,10 @@ int main(int argc, char** argv)
             cout << "edgecossings " << maxTotalCrossingsEdges << endl;
             nodeswap.swap(2,1);
             cout << "nodecossings " << totalCrossings << endl;
+
+            for (int i = 0; i < spine.size(); i++) {
+                cout << spine[i].getName() << " - " << spine[i].getCrossings() << endl; 
+            }
 
             // deter.writeSpine();
             // deter.writeEdgeList();

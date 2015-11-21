@@ -11,11 +11,14 @@ endif
 
 all: hot
 
-hot: main.o page.gch edge.gch node.gch deterministic.o edgeswap.o nodeswap.o kpmp_instance.o kpmp_solution_writer.o
+hot: main.o utilities.gch page.gch edge.gch node.gch deterministic.o edgeswap.o nodeswap.o kpmp_instance.o kpmp_solution_writer.o
 	g++ -std=c++11 main.o deterministic.o edgeswap.o nodeswap.o kpmp_instance.o kpmp_solution_writer.o -o hot
 
 main.o: main.cpp
 	g++ -std=c++11 -c main.cpp
+
+utilities.gch: utilities.h
+	g++ -std=c++11 -c utilities.h
 
 edge.gch: edge.h node.h
 	g++ -std=c++11 -c edge.h
@@ -29,10 +32,10 @@ node.gch: node.h
 deterministic.o: deterministic.cpp deterministic.h
 	g++ -std=c++11 -c deterministic.cpp
 
-edgeswap.o: edgeswap.cpp edgeswap.h
+edgeswap.o: edgeswap.cpp edgeswap.h utilities.h
 	g++ -std=c++11 -c edgeswap.cpp
 
-nodeswap.o: nodeswap.cpp nodeswap.h
+nodeswap.o: nodeswap.cpp nodeswap.h utilities.h
 	g++ -std=c++11 -c nodeswap.cpp
 
 kpmp_instance.o: kpmp_instance.cpp kpmp_instance.h
