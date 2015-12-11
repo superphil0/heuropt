@@ -18,7 +18,7 @@ void Edgeswap::bestImprovement(unsigned int noEdgesToSwap) {
     vector<unsigned int> pages;
     unsigned int currMinCrossing = UINT_MAX;
     unsigned int c = 0;
-    srand (time(NULL));
+    srand (clock());
 
     //find best pages for removed edges
     // if possible edges should be added to different page
@@ -89,13 +89,11 @@ void Edgeswap::randomImprovement(unsigned int noEdgesToSwap) {
         if (pages[0] != (*edgeList)[e].getPage()) {
             (*book)[pages[0]].addEdge((*edgeList)[e]);
             (*edgeList)[e].setPage(pages[0]);
-            cout << "add first" << endl;
         }
         //would have been same page take next
         else {
             (*book)[pages[1]].addEdge((*edgeList)[e]);
             (*edgeList)[e].setPage(pages[1]);
-            cout << "add second" << endl;
         }
     }
 
@@ -117,7 +115,7 @@ void Edgeswap::calculateCrossings() {
     }
     // crossings are counted per edge -> each crossing is counted twice
     *totalCrossings /= 2;
-    cout << "total crossings " << *totalCrossings << endl;
+    //cout << "total crossings " << *totalCrossings << endl;
 }
 
 void Edgeswap::swap(unsigned int noEdgesToSwap, unsigned int stepFunction) {

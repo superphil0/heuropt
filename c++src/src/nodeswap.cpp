@@ -5,6 +5,7 @@
 #include <climits>
 #include <algorithm>
 #include "edgeswap.h"
+#include <ctime>
 
 bool sortNodesByEdgeCrossings(Node* first, Node* second) {
 	return first->getCrossings() > second->getCrossings();
@@ -44,7 +45,7 @@ void Nodeswap::swap(int select, int mode) {
 	// init variables for page checking
 	vector<unsigned int> pages;
 	unsigned int c = 0;
-	srand(time(NULL));
+	srand(clock());
 	*totalCrossings = 0;
 	int edgesPage = 0;
 	for (unsigned int node = 0; node < spine->size(); node++) {
@@ -119,7 +120,7 @@ void Nodeswap::swap(int select, int mode) {
 	else {
 		changeOrder(spineRef.at(bestNode), bestPos, spine);
 	}
-	cout << "crossings before: " << oldBest << " new best: " << crossingsBest << endl;
+	//cout << "crossings before: " << oldBest << " new best: " << crossingsBest << endl;
 }
 
 // starts at 0 and ends at len - -1

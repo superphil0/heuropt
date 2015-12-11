@@ -21,6 +21,7 @@ public:
 			(*edgeList)[e].getStartNode()->setCrossings((*edgeList)[e].getStartNode()->getCrossings() + edgeCrossings);
 			(*edgeList)[e].getEndNode()->setCrossings((*edgeList)[e].getEndNode()->getCrossings() + edgeCrossings);
 		}
+		return edgeCrossings;
 	}
 
 	static unsigned int calculateEdgeCrossing(Edge* edge, vector<Page>* book) {
@@ -85,7 +86,7 @@ public:
 			totalCrossing += edgeCrossing;
 		}
 		// crossings are counted per edge -> each crossing is counted twice
-		cout << "crossings new method: " << totalCrossing/2 << endl;
+		//cout << "crossings new method: " << totalCrossing/2 << endl;
 		return totalCrossing /= 2;
 
 	}

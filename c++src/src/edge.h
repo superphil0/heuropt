@@ -65,7 +65,7 @@ public:
 	}
 
 	void writeEdge() {
-		cout << startNode->getName() << ' ' << endNode->getName() << ' ' << startNode->getPosition() << ' ' << endNode->getPosition() <<  ' ' << getLength() << endl;
+		//cout << startNode->getName() << ' ' << endNode->getName() << ' ' << startNode->getPosition() << ' ' << endNode->getPosition() <<  ' ' << getLength() << endl;
 	}
 
 

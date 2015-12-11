@@ -86,7 +86,7 @@ void Deterministic::sortSpineDFS() {
     vector<unsigned int> nodes;
     vector<pair<unsigned int, unsigned int>> spineOrder;
     // randomly chose start node
-    srand (time(NULL));
+    srand (clock());
     for (unsigned int i = 0; i < spine->size(); i++) {
         nodes.push_back(i);
     }
@@ -118,7 +118,7 @@ void Deterministic::h1() {
     unsigned int currMinCrossing = UINT_MAX;
     unsigned int c = 0;
     *totalCrossings = 0;
-    srand (time(NULL));
+    srand (clock());
 
     //find best pages for inserting edges
     for(unsigned int e = 0; e < edgeList->size(); e++) {
@@ -151,5 +151,5 @@ void Deterministic::h1() {
         (*edgeList)[e].setCrossings((*book)[edgesPage].calculateCrossings((*edgeList)[e]));
     }
 
-    cout << "total crossings " << *totalCrossings << endl;
+    //cout << "total crossings " << *totalCrossings << endl;
 }
