@@ -24,6 +24,57 @@ public:
 		return edgeCrossings;
 	}
 
+	static unsigned int calculateEdgeCrossing(vector<Edge>* edgeList) {
+		unsigned int teststart;
+		unsigned int testend;
+		unsigned int start;
+		unsigned int end;
+
+		unsigned int edgeCrossing = 0;
+		unsigned int totalCrossing = 0;
+
+
+
+		for (unsigned int i = 0; i < (*edgeList).size(); i++) {
+			// set start and end node in correct order for easier testing
+			if ((*edgeList)[i].getStartNode()->getPosition() < (*edgeList)[i].getEndNode()->getPosition()) {
+				start = (*edgeList)[i].getStartNode()->getPosition();
+				end = (*edgeList)[i].getEndNode()->getPosition();
+			} else {
+				start = (*edgeList)[i].getEndNode()->getPosition();
+				end = (*edgeList)[i].getStartNode()->getPosition();
+			}
+			for (unsigned int j = 0; j < (*edgeList).size(); j++) {
+				if (i != j && (*edgeList)[i].getPage() == (*edgeList)[j].getPage()) {
+					// set start and end node in correct order for easier testing
+					if ((*edgeList)[j].getStartNode()->getPosition() < (*edgeList)[j].getEndNode()->getPosition()) {
+						teststart = (*edgeList)[j].getStartNode()->getPosition();
+						testend = (*edgeList)[j].getEndNode()->getPosition();
+					} else {
+						teststart = (*edgeList)[j].getEndNode()->getPosition();
+						testend = (*edgeList)[j].getStartNode()->getPosition();
+					}
+
+					if (start < teststart) { //startNode outside edge
+						if ( (end > teststart) && (end < testend) ) { // endNode inside edge
+							edgeCrossing++;
+						}
+					} else if ( (start > teststart) && (start < testend) ) { // startNode inside edge
+						if (end > testend) { // endNode outside edge
+							edgeCrossing++;
+						}
+					}
+				}
+			}
+			(*edgeList)[i].setCrossings(edgeCrossing);
+			totalCrossing+=edgeCrossing;
+			edgeCrossing = 0;
+		}
+
+		return totalCrossing/2;
+
+	}
+
 	static unsigned int calculateEdgeCrossing(Edge* edge, vector<Page>* book) {
 		// tmpValues for nodes of edges to test
 		unsigned int teststart;

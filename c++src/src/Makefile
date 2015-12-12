@@ -11,7 +11,7 @@ endif
 
 all: hot
 
-hot: main.o utilities.gch page.gch edge.gch node.gch deterministic.o edgeswap.o nodeswap.o genetic.o solution.gch kpmp_instance.o kpmp_solution_writer.o
+hot: main.o utilities.gch page.gch edge.gch node.gch deterministic.o edgeswap.o nodeswap.o genetic.o gensolution.gch kpmp_instance.o kpmp_solution_writer.o
 	g++ -std=c++11 main.o deterministic.o edgeswap.o nodeswap.o genetic.o kpmp_instance.o kpmp_solution_writer.o -o hot
 
 main.o: main.cpp
@@ -29,8 +29,8 @@ page.gch: page.h edge.h
 node.gch: node.h
 	g++ -std=c++11 -c node.h
 
-solution.gch: solution.h edge.h node.h
-	g++ -std=c++11 -c solution.h
+gensolution.gch: gensolution.h edge.h node.h
+	g++ -std=c++11 -c gensolution.h
 
 deterministic.o: deterministic.cpp deterministic.h
 	g++ -std=c++11 -c deterministic.cpp
@@ -41,7 +41,7 @@ edgeswap.o: edgeswap.cpp edgeswap.h utilities.h
 nodeswap.o: nodeswap.cpp nodeswap.h utilities.h
 	g++ -std=c++11 -c nodeswap.cpp
 
-genetic.o: genetic.cpp genetic.h deterministic.h deterministic.cpp node.h edge.h page.h
+genetic.o: genetic.cpp genetic.h deterministic.h deterministic.cpp node.h edge.h page.h gensolution.h
 	g++ -std=c++11 -c genetic.cpp
 
 kpmp_instance.o: kpmp_instance.cpp kpmp_instance.h

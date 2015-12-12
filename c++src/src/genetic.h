@@ -5,7 +5,7 @@
 #include "node.h"
 #include "edge.h"
 #include "page.h"
-#include "solution.h"
+#include "gensolution.h"
 
 #include <iostream>
 #include <algorithm>
@@ -18,7 +18,7 @@ using namespace std;
 class Genetic {
 
 private:
-    vector<vector<Edge>> solution;
+    vector<Gensolution> geneticSolution;
     vector<Node>* spine;
     vector<Edge>* edgeList;
     vector<Page>* book;
@@ -43,14 +43,16 @@ public:
         //vector<Edge> s2Edges = s2.getEdgeList();
         vector<Edge> finalEdgeList;
         //unsigned edgeCount = s1.getEdgeList().size();
-
+        srand (clock());
         for (unsigned int i = 0; i < s1.size(); i++) {
             if (s1[i].getPage() == s2[i].getPage()) {
                 finalEdgeList.push_back(s1[i]);
             } else {
-                srand (clock());
-                double r = ((double) rand() / (1)) + 1;
-                if (r < .5) {
+
+                // int r = 0 + (rand() % (int)(1 - 0));
+                int r = 0 + (rand() % (int)(1 - 0 + 1));
+                cout << "r " << r << " ";
+                if (r == 0) {
                     finalEdgeList.push_back(s1[i]);
                 } else {
                     finalEdgeList.push_back(s2[i]);

@@ -104,8 +104,8 @@ int runAlgorithm(int fileNum, int amount, int* best)
 
 	deter.sortSpineDFS();
 
-	gen.createInitialSolutions(5);
-	
+	gen.createInitialSolutions(12);
+
 	//deter.writeSpine();
 	//deter.sortSpine(-1);
 
