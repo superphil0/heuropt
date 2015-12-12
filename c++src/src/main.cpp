@@ -6,6 +6,7 @@
 #include "deterministic.h"
 #include "edgeswap.h"
 #include "nodeswap.h"
+#include "genetic.h"
 
 #include <memory>
 #include <string>
@@ -46,7 +47,7 @@ int runAlgorithm(int fileNum, int amount, int* best)
 {
 	// read instance
 	std::string path("../../c++src/instances/automatic-");
-	std::string file(path + std::to_string(fileNum) + ".txt");
+	std::string file(path + /*std::to_string(fileNum)*/ + "1.txt");
 	std::shared_ptr<KPMPInstance> instance(KPMPInstance::readInstance(file));
 
 	unsigned int numVertices = instance->getNumVertices();
@@ -94,12 +95,17 @@ int runAlgorithm(int fileNum, int amount, int* best)
 		}
 	}
 
+	// create genetic...
+	Genetic gen(&spine, &edgeList, &book);
+
 	// create deterministic instance
 	Deterministic deter(solution, &spine, &edgeList, &book, &totalCrossings);
 	// sort spine in descending node order
 
 	deter.sortSpineDFS();
 
+	gen.createInitialSolutions(5);
+	
 	//deter.writeSpine();
 	//deter.sortSpine(-1);
 
@@ -214,7 +220,7 @@ int main(int argc, char** argv)
 				return -1;
 			}
 			std::string str(argv[i + 1]);
-			problem = std::stoi(str);
+			problem = 1;// std::stoi(str);
 			++i;
 		}
 		else {
@@ -262,4 +268,3 @@ int main(int argc, char** argv)
 	//std::cin.get();
 	return 0;
 } // main
-
