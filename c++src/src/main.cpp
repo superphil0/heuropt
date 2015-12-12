@@ -265,6 +265,6 @@ int main(int argc, char** argv)
 		std::cout << "time needed average: " << timee / numRuns * 1000 / CLOCKS_PER_SEC << " ms" << endl;
 	}
 
-	//std::cin.get();
+	std::cin.get();
 	return 0;
 } // main

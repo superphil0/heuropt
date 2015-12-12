@@ -61,6 +61,29 @@ public:
             cout << i << "-" << finalEdgeList[i].getPage() << "; ";
         }
     }
+    /*vector<solution> select(vector<solution> solutions, int k) {
+			srand(clock());
+			long sum = 0; 
+			for(int i = 0; i < numSolutions; i++)
+			{
+				sum += solution[i]->fitness;
+			}
+			vector<solution> returns;
+			for(int j = 0; j<k; j++)
+			{
+				long which = (long) 20*rand() % sum; //this is now index;
+				int i = 0;
+				while(which > 0)
+				{
+					r -= solution[i]->fitness;
+					i++;
+				}
+				i--;
+				returns.pushback(solution[i]);
+			}
+			return returns;
+	}
+	*/
 };
 
 

@@ -38,6 +38,34 @@ void Genetic::createRandomPageAssignment() {
     }
     this->solution.push_back(rndSolution);
     rndSolution.clear();
-
-
 }
+/*
+// takes k solutions runs the algorithm and returns all solutions
+solutionslist Genetic::iterateOnce(solutions)
+{
+	vector<solution> solutionslist = solutions; // copy here list
+	int numSolutions = ??;
+	int m = 10; // wieviel recombinen
+	// select best m solutions
+	selectedSolutions = select(solutions, m);
+	 // recombine them will produce m-1 children
+	for(int i = 0; i < m-1; i++)
+	{
+		solution child = merge(selectedSolutions[i], selectedSolutions[i+1]);
+		// mutation
+		for(unsigned int e = 0; e < solution->edgeList->size(); e++) {
+			if(rand() % 100 < 2)
+			{
+				page = 0 + (rand() % (int)(booksize - 0));
+				?????.setPage(page);
+			}
+		}
+		// replacement
+		int pos = (int) rand()% numSolutions;
+		solutionslist[pos] = child;
+	}
+
+	return solutionslist;
+}
+
+*/
