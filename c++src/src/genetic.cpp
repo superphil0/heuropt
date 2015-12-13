@@ -42,9 +42,19 @@ void Genetic::createRandomPageAssignment() {
     crossings = Utilities::calculateEdgeCrossing(&rndSolution);
     s.setEdgeList(rndSolution);
     s.setCrossings(crossings);
-    cout << "crs " << crossings << endl; 
+    cout << "crs " << crossings << endl;
+    int insertAt = 0;
+    for(insertAt; insertAt < geneticSolution.size(); insertAt++) {
+        if (geneticSolution[insertAt].getCrossings() > crossings) {
+            break;
+        }
+    }
+    geneticSolution.insert(geneticSolution.begin() + insertAt, s);
+    cout << "insert at: " << insertAt << endl;
 
-    this->geneticSolution.push_back(s);
+
+
+    //this->geneticSolution.push_back(s);
     rndSolution.clear();
 }
 /*
