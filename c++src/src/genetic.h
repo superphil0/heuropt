@@ -34,7 +34,7 @@ public:
 
 	}
 
-	void Genetic::iterateOnce();
+	void iterateOnce();
     void createInitialSolutions(unsigned int noOfSolutions);
 
     void createRandomPageAssignment();
@@ -61,17 +61,44 @@ public:
             }
         }
 		Gensolution s;
+        int crossings = Utilities::calculateEdgeCrossing(&finalEdgeList);
 		s.setEdgeList(finalEdgeList);
+        s.setCrossings(crossings);
         for (int i=0; i < finalEdgeList.size(); i++) {
             //cout << i << "-" << finalEdgeList[i].getPage() << "; ";
         }
 		return s;
-		
     }
+
+    Gensolution mergePivot(Gensolution s1, Gensolution s2) {
+        vector<Edge> s1Edges = s1.getEdgeList();
+        vector<Edge> s2Edges = s2.getEdgeList();
+        vector<Edge> finalEdgeList;
+
+        int pivot = 0 + (rand() % (int)(s1Edges.size() - 0 + 1));
+
+        for (int i=0; i < s1Edges.size(); i++ ) {
+            if (i<pivot) {
+                finalEdgeList.push_back(s1Edges[i]);
+            }
+            else {
+                finalEdgeList.push_back(s2Edges[i]);
+            }
+        }
+
+        Gensolution s;
+        int crossings = Utilities::calculateEdgeCrossing(&finalEdgeList);
+		s.setEdgeList(finalEdgeList);
+        s.setCrossings(crossings);
+
+        return s;
+
+    }
+
     vector<Gensolution> select(vector<Gensolution> solutions, int k) {
 			srand(clock());
 			int numSolutions = solutions.size();
-			double sum = 0; 
+			double sum = 0;
 			for(int i = 0; i < numSolutions; i++)
 			{
 				if (solutions[i].getCrossings() != 0)

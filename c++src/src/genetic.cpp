@@ -68,7 +68,8 @@ void Genetic::iterateOnce()
 	 // recombine them will produce m-1 children
 	for(int i = 0; i < m-1; i++)
 	{
-		Gensolution child = merge(selectedSolutions[i], selectedSolutions[i+1]);
+		// Gensolution child = merge(selectedSolutions[i], selectedSolutions[i+1]);
+        Gensolution child = mergePivot(selectedSolutions[i], selectedSolutions[i+1]);
 		// mutation
 		for(unsigned int e = 0; e < child.getEdgeList().size(); e++) {
 			if(rand() % 100 < 2)
@@ -77,7 +78,9 @@ void Genetic::iterateOnce()
 				child.getEdgeList()[e].setPage(page);
 			}
 		}
-		int crossings = Utilities::calculateEdgeCrossing(&child.getEdgeList());
+        vector<Edge> el = child.getEdgeList();
+        int crossings = Utilities::calculateEdgeCrossing(&el);
+        // int crossings = Utilities::calculateEdgeCrossing(&child.getEdgeList());
 		child.setCrossings(crossings);
 		std::cout << "crs " << crossings << endl;
 		// replacement
