@@ -47,7 +47,7 @@ int runAlgorithm(int fileNum, int amount, int* best)
 {
 	// read instance
 	std::string path("../../c++src/instances/automatic-");
-	std::string file(path + /*std::to_string(fileNum)*/ + "2.txt");
+	std::string file(path + /*std::to_string(fileNum)*/ + "8.txt");
 	std::shared_ptr<KPMPInstance> instance(KPMPInstance::readInstance(file));
 
 	unsigned int numVertices = instance->getNumVertices();
@@ -101,10 +101,23 @@ int runAlgorithm(int fileNum, int amount, int* best)
 
 	gen.createInitialSolutions(100);
 
-	gen.iterateOnce();
-	gen.iterateOnce();
-	gen.iterateOnce();
-	gen.iterateOnce();
+	int bestCrossings = INT_MAX;
+	int noImprovement = 0;
+	Gensolution bestSolution;
+	Gensolution someSolution;
+	while(true) {
+		someSolution = gen.iterateOnce();
+		if (someSolution.getCrossings() < bestCrossings) {
+			bestSolution = someSolution;
+			bestCrossings = bestSolution.getCrossings();
+			noImprovement = 0;
+		} else if (++noImprovement > 2){
+			break;
+		}
+	};
+	cout << "BEST --- " << bestCrossings;
+	// gen.iterateOnce();
+	// gen.iterateOnce();
 
 	//cout << "total crossings " << totalCrossings << endl;
 	//std::cout << "CPU Time: " << getCPUtime() << std::endl;

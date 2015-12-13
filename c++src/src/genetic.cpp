@@ -1,4 +1,5 @@
 #include <iostream>
+#include <climits>
 
 #include "genetic.h"
 #include "deterministic.h"
@@ -57,22 +58,24 @@ void Genetic::createRandomPageAssignment() {
 }
 
 // takes k solutions runs the algorithm and returns all solutions
-void Genetic::iterateOnce()
+Gensolution Genetic::iterateOnce()
 {
 	std::cout << "start Iteration" << endl;
-	int numSolutions = geneticSolution.size();
-	int m = 10; // wieviel recombinen
+    int minCrossing = INT_MAX;
+    Gensolution bestSolution;
+    int numSolutions = geneticSolution.size();
+	int m = 50; // wieviel recombinen
     unsigned int booksize = book->size();
 	// select best m solutions
 	vector<Gensolution> selectedSolutions = select(geneticSolution, m);
 	 // recombine them will produce m-1 children
 	for(int i = 0; i < m-1; i++)
 	{
-		// Gensolution child = merge(selectedSolutions[i], selectedSolutions[i+1]);
-        Gensolution child = mergePivot(selectedSolutions[i], selectedSolutions[i+1]);
+		Gensolution child = merge(selectedSolutions[i], selectedSolutions[i+1]);
+        // Gensolution child = mergePivot(selectedSolutions[i], selectedSolutions[i+1]);
 		// mutation
 		for(unsigned int e = 0; e < child.getEdgeList().size(); e++) {
-			if(rand() % 100 < 2)
+			if(rand() % 100 < 1)
 			{
 				int page = 0 + (rand() % (int)(booksize - 0));
 				child.getEdgeList()[e].setPage(page);
@@ -82,9 +85,14 @@ void Genetic::iterateOnce()
         int crossings = Utilities::calculateEdgeCrossing(&el);
         // int crossings = Utilities::calculateEdgeCrossing(&child.getEdgeList());
 		child.setCrossings(crossings);
+        if (crossings < minCrossing) {
+            minCrossing = crossings;
+            bestSolution = child;
+        }
 		std::cout << "crs " << crossings << endl;
 		// replacement
 		int pos = (int) rand()% numSolutions;
 		geneticSolution[pos] = child;
 	}
+    return bestSolution;
 }

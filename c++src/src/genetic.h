@@ -34,7 +34,7 @@ public:
 
 	}
 
-	void iterateOnce();
+	Gensolution iterateOnce();
     void createInitialSolutions(unsigned int noOfSolutions);
 
     void createRandomPageAssignment();
