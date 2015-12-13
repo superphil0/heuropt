@@ -98,89 +98,14 @@ int runAlgorithm(int fileNum, int amount, int* best)
 	// create genetic...
 	Genetic gen(&spine, &edgeList, &book);
 
-	// create deterministic instance
-	Deterministic deter(solution, &spine, &edgeList, &book, &totalCrossings);
-	// sort spine in descending node order
-
-	deter.sortSpineDFS();
 
 	gen.createInitialSolutions(12);
 
-	//deter.writeSpine();
-	//deter.sortSpine(-1);
+	gen.iterateOnce();
+	gen.iterateOnce();
+	gen.iterateOnce();
+	gen.iterateOnce();
 
-	// fill spineorder for sulution
-	vector<unsigned int> finalSpineOrder(numVertices);
-	for (unsigned int i = 0; i < spine.size(); i++) {
-		finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
-	}
-	// sort edges with descending length
-	deter.sortEdges(-1);
-	// deter.writeSpine();
-	// deter.writeEdgeList();
-	deter.h1();
-
-	// for (unsigned int e=0; e < edgeList.size(); e++) {
-	//     cout << "final edge state " << edgeList[e].getStartNode()->getName() << " - " << edgeList[e].getEndNode()->getName() << " crossings " << edgeList[e].getCrossings() << " on Page " << edgeList[e].getPage() <<endl;
-	// }
-
-	Edgeswap edgeswap(solution, &spine, &edgeList, &book, &totalCrossings);
-	Nodeswap nodeswap(solution, &spine, &edgeList, &book, &totalCrossings, &adjList);
-	solution->setSpineOrder(finalSpineOrder);
-	//solution->write("solution");
-	solution->clearSolution();
-	unsigned int maxTotalCrossingsEdges = UINT_MAX;
-	unsigned int maxTotalCrossingsNodes = UINT_MAX;
-	unsigned int iteration = 0;
-	// termination condition
-	while (maxTotalCrossingsNodes > totalCrossings ) {
-		while (maxTotalCrossingsEdges > totalCrossings) {
-			maxTotalCrossingsEdges = totalCrossings;
-
-			edgeswap.swap(3, 1);
-
-		}
-		/*for (int i = 0; i < edgeList.size(); i++) {
-			std::cout << edgeList[i].getCrossings() << " ";
-		}*/
-		//std::cout << endl;
-
-			iteration++;
-		//
-		// select
-		// method 1 = bestImprovement look at all nodes and improve best
-		// method 2 = firstImprovement take node with max edgecrossing
-		// method 3 = randomImprovement take random node
-		// mode
-		// mode 1 = swapnodes
-		// mode 2 = insert node somewhere
-		maxTotalCrossingsNodes = maxTotalCrossingsEdges;
-		//std::cout << "edgecossings " << maxTotalCrossingsEdges << endl;
-		nodeswap.swap(3, 1);
-		//std::cout << "nodecossings " << totalCrossings << endl;
-/*
-		for (int i = 0; i < spine.size(); i++) {
-			std::cout << spine[i].getName() << " - " << spine[i].getCrossings() << endl;
-		}*/
-
-		// deter.writeEdgeList();
-		// noEdgesToSwap, method
-		// method 1 = bestImprovement
-		// method 2 = firstImprovement
-		// method 3 = randomImprovement
-	}
-	solution->clearSolution();
-
-	for (unsigned int i = 0; i < spine.size(); i++) {
-		finalSpineOrder[spine[i].getPosition()] = spine[i].getName();
-	}
-
-	for (unsigned int e = 0; e < edgeList.size(); e++) {
-		solution->addEdgeOnPage(edgeList[e].getStartNode()->getName(), edgeList[e].getEndNode()->getName(), edgeList[e].getPage());
-	}
-
-
-	solution->setSpineOrder(finalSpineOrder);
 	//cout << "total crossings " << totalCrossings << endl;
 	//std::cout << "CPU Time: " << getCPUtime() << std::endl;
 	if (totalCrossings < *best)
@@ -228,9 +153,9 @@ int main(int argc, char** argv)
 			return -1;
 		}
 	}
-	int numRuns = 10;
+	int numRuns = 1;
 	int start = 1;
-	int end = 5;
+	int end = 1;
 	if (problem != 0)
 	{
 		start = problem;

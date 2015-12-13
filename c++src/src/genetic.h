@@ -6,7 +6,7 @@
 #include "edge.h"
 #include "page.h"
 #include "gensolution.h"
-
+#include "utilities.h"
 #include <iostream>
 #include <algorithm>
 #include <list>
@@ -34,58 +34,69 @@ public:
 
 	}
 
+	void Genetic::iterateOnce();
     void createInitialSolutions(unsigned int noOfSolutions);
 
     void createRandomPageAssignment();
 
-    void merge(vector<Edge> s1, vector<Edge> s2) {
-        //vector<Edge> s1Edges = s1.getEdgeList();
-        //vector<Edge> s2Edges = s2.getEdgeList();
+    Gensolution merge(Gensolution s1, Gensolution s2) {
+        vector<Edge> s1Edges = s1.getEdgeList();
+        vector<Edge> s2Edges = s2.getEdgeList();
         vector<Edge> finalEdgeList;
         //unsigned edgeCount = s1.getEdgeList().size();
         srand (clock());
-        for (unsigned int i = 0; i < s1.size(); i++) {
-            if (s1[i].getPage() == s2[i].getPage()) {
-                finalEdgeList.push_back(s1[i]);
+        for (unsigned int i = 0; i < s1Edges.size(); i++) {
+            if (s1Edges[i].getPage() == s2Edges[i].getPage()) {
+                finalEdgeList.push_back(s1Edges[i]);
             } else {
 
                 // int r = 0 + (rand() % (int)(1 - 0));
                 int r = 0 + (rand() % (int)(1 - 0 + 1));
-                cout << "r " << r << " ";
+                //cout << "r " << r << " ";
                 if (r == 0) {
-                    finalEdgeList.push_back(s1[i]);
+                    finalEdgeList.push_back(s1Edges[i]);
                 } else {
-                    finalEdgeList.push_back(s2[i]);
+                    finalEdgeList.push_back(s2Edges[i]);
                 }
             }
         }
+		Gensolution s;
+		s.setEdgeList(finalEdgeList);
         for (int i=0; i < finalEdgeList.size(); i++) {
-            cout << i << "-" << finalEdgeList[i].getPage() << "; ";
+            //cout << i << "-" << finalEdgeList[i].getPage() << "; ";
         }
+		return s;
+		
     }
-    /*vector<solution> select(vector<solution> solutions, int k) {
+    vector<Gensolution> select(vector<Gensolution> solutions, int k) {
 			srand(clock());
-			long sum = 0; 
+			int numSolutions = solutions.size();
+			double sum = 0; 
 			for(int i = 0; i < numSolutions; i++)
 			{
-				sum += solution[i]->fitness;
+				if (solutions[i].getCrossings() != 0)
+				{
+					sum += 1 / (double)solutions[i].getCrossings();
+				}
 			}
-			vector<solution> returns;
+			vector<Gensolution> returns;
 			for(int j = 0; j<k; j++)
 			{
-				long which = (long) 20*rand() % sum; //this is now index;
+				double which = fmod((double) rand(), sum); //this is now index;
 				int i = 0;
 				while(which > 0)
 				{
-					r -= solution[i]->fitness;
+					if (solutions[i].getCrossings() != 0)
+					{
+						which -= 1 / (double) solutions[i].getCrossings();
+					}
 					i++;
 				}
 				i--;
-				returns.pushback(solution[i]);
+				returns.push_back(solutions[i]);
 			}
 			return returns;
 	}
-	*/
 };
 
 

@@ -4,7 +4,6 @@
 #include "deterministic.h"
 #include "page.h"
 #include "kpmp_solution_writer.h"
-#include "utilities.h"
 
 void Genetic::createInitialSolutions(unsigned int noOfSolutions) {
     //Deterministic(KPMPSolutionWriter* solution, vector<Node>* spine, vector<Edge>* edgeList, vector<Page>* book, unsigned int * totalCrossings)
@@ -14,11 +13,10 @@ void Genetic::createInitialSolutions(unsigned int noOfSolutions) {
     Deterministic d(solution, spine, edgeList, book, &totalCrossings);
     d.sortSpineDFS();
     for (unsigned int i = 0; i < noOfSolutions; i++ ) {
-        cout << "in" << endl;
+        //std::cout << "in" << endl;
         createRandomPageAssignment();
     }
-    cout << "finished" << endl;
-    merge((this->geneticSolution[0]).getEdgeList(), this->geneticSolution[1].getEdgeList());
+    std::cout << "finished" << endl;
 }
 
 void Genetic::createRandomPageAssignment() {
@@ -33,7 +31,7 @@ void Genetic::createRandomPageAssignment() {
     //find best pages for inserting edges
     for(unsigned int e = 0; e < edgeList->size(); e++) {
         page = 0 + (rand() % (int)(booksize - 0));
-        cout << e << "-" << page << "; ";
+        //std::cout << e << "-" << page << "; ";
         Edge tmpEdge = (*edgeList)[e];
         tmpEdge.setPage(page);
         rndSolution.push_back(tmpEdge);
@@ -42,7 +40,7 @@ void Genetic::createRandomPageAssignment() {
     crossings = Utilities::calculateEdgeCrossing(&rndSolution);
     s.setEdgeList(rndSolution);
     s.setCrossings(crossings);
-    cout << "crs " << crossings << endl;
+    std::cout << "crs " << crossings << endl;
     int insertAt = 0;
     for(insertAt; insertAt < geneticSolution.size(); insertAt++) {
         if (geneticSolution[insertAt].getCrossings() > crossings) {
@@ -50,40 +48,40 @@ void Genetic::createRandomPageAssignment() {
         }
     }
     geneticSolution.insert(geneticSolution.begin() + insertAt, s);
-    cout << "insert at: " << insertAt << endl;
+    //std::cout << "insert at: " << insertAt << endl;
 
 
 
     //this->geneticSolution.push_back(s);
     rndSolution.clear();
 }
-/*
+
 // takes k solutions runs the algorithm and returns all solutions
-solutionslist Genetic::iterateOnce(solutions)
+void Genetic::iterateOnce()
 {
-	vector<solution> solutionslist = solutions; // copy here list
-	int numSolutions = ??;
+	std::cout << "start Iteration" << endl;
+	int numSolutions = geneticSolution.size();
 	int m = 10; // wieviel recombinen
+    unsigned int booksize = book->size();
 	// select best m solutions
-	selectedSolutions = select(solutions, m);
+	vector<Gensolution> selectedSolutions = select(geneticSolution, m);
 	 // recombine them will produce m-1 children
 	for(int i = 0; i < m-1; i++)
 	{
-		solution child = merge(selectedSolutions[i], selectedSolutions[i+1]);
+		Gensolution child = merge(selectedSolutions[i], selectedSolutions[i+1]);
 		// mutation
-		for(unsigned int e = 0; e < solution->edgeList->size(); e++) {
+		for(unsigned int e = 0; e < child.getEdgeList().size(); e++) {
 			if(rand() % 100 < 2)
 			{
-				page = 0 + (rand() % (int)(booksize - 0));
-				?????.setPage(page);
+				int page = 0 + (rand() % (int)(booksize - 0));
+				child.getEdgeList()[e].setPage(page);
 			}
 		}
+		int crossings = Utilities::calculateEdgeCrossing(&child.getEdgeList());
+		child.setCrossings(crossings);
+		std::cout << "crs " << crossings << endl;
 		// replacement
 		int pos = (int) rand()% numSolutions;
-		solutionslist[pos] = child;
+		geneticSolution[pos] = child;
 	}
-
-	return solutionslist;
 }
-
-*/
