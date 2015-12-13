@@ -89,7 +89,7 @@ Gensolution Genetic::iterateOnce()
             minCrossing = crossings;
             bestSolution = child;
         }
-		std::cout << "crs " << crossings << endl;
+		//std::cout << "crs " << crossings << endl;
 		// replacement
 		int pos = (int) rand()% numSolutions;
 		geneticSolution[pos] = child;
