@@ -122,6 +122,7 @@ public:
 				i--;
 				returns.push_back(solutions[i]);
 			}
+            random_shuffle(returns.begin(), returns.end());
 			return returns;
 	}
 };
