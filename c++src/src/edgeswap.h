@@ -23,6 +23,12 @@ private:
 	vector<Page>* book;
 	unsigned int* totalCrossings;
 public:
+	Edgeswap( vector<Node>* spine, vector<Edge>* edgeList, vector<Page>* book, unsigned int* totalCrossings) {
+		this->spine = spine;
+		this->edgeList = edgeList;
+		this->book = book;
+		this->totalCrossings = totalCrossings;
+	}
 	Edgeswap(KPMPSolutionWriter* solution, vector<Node>* spine, vector<Edge>* edgeList, vector<Page>* book, unsigned int* totalCrossings) {
 		this->solution = solution;
 		this->spine = spine;

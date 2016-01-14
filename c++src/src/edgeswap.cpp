@@ -108,7 +108,7 @@ void Edgeswap::calculateCrossings() {
     // and write solution
     for (unsigned int e=0; e < edgeList->size(); e++) {
         edgesPage = (*edgeList)[e].getPage();
-        solution->addEdgeOnPage((*edgeList)[e].getStartNode()->getName(), (*edgeList)[e].getEndNode()->getName(),  edgesPage);
+        //solution->addEdgeOnPage((*edgeList)[e].getStartNode()->getName(), (*edgeList)[e].getEndNode()->getName(),  edgesPage);
         c = (*book)[edgesPage].calculateCrossings((*edgeList)[e]);
         (*edgeList)[e].setCrossings(c);
         *totalCrossings += c;

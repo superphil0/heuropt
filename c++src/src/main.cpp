@@ -46,10 +46,10 @@ void usage()
 int runAlgorithm(int fileNum, int amount, int* best)
 {
 	// read instance
-	std::string path("../../c++src/instances/automatic-");
+	std::string path("../../instances/automatic-");
 	std::string file(path + /*std::to_string(fileNum)*/ + "1.txt");
 	std::shared_ptr<KPMPInstance> instance(KPMPInstance::readInstance(file));
-
+	
 	unsigned int numVertices = instance->getNumVertices();
 	unsigned int booksize = instance->getK();
 	vector<vector<unsigned int>> adjList = instance->getAdjacencyList();

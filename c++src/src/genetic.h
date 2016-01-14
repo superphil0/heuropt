@@ -37,14 +37,17 @@ public:
 	Gensolution iterateOnce();
     void createInitialSolutions(unsigned int noOfSolutions);
 
-    void createRandomPageAssignment();
+    void createRandomPageAssignment(Gensolution s);
 
     Gensolution merge(Gensolution s1, Gensolution s2) {
         vector<Edge> s1Edges = s1.getEdgeList();
         vector<Edge> s2Edges = s2.getEdgeList();
         vector<Edge> finalEdgeList;
-        //unsigned edgeCount = s1.getEdgeList().size();
+        vector<Node> finalSpine;
         srand (clock());
+		for (unsigned int i = 0; i < s1.getSpine().size(); i++) {
+			//if(s1.getSpine()[i].get)
+		}
         for (unsigned int i = 0; i < s1Edges.size(); i++) {
             if (s1Edges[i].getPage() == s2Edges[i].getPage()) {
                 finalEdgeList.push_back(s1Edges[i]);

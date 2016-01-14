@@ -3,6 +3,7 @@
 
 #include "node.h"
 #include "edge.h"
+#include "node.h"
 #include "page.h"
 
 #include <iostream>
@@ -15,6 +16,7 @@ using namespace std;
 class Gensolution {
 private:
     vector<Edge> edgeList;
+    vector<Node> spine;
     int crossings;
 
 public:
@@ -28,6 +30,12 @@ public:
 
     void setEdgeList(vector<Edge> edgeList) {
         this->edgeList = edgeList;
+    }
+    void setSpine(vector<Node> spine) {
+        this->spine = spine;
+    }
+    vector<Node> getSpine() {
+        return this->spine;
     }
 
     vector<Edge> getEdgeList() {
