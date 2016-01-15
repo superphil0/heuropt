@@ -17,6 +17,7 @@ class Gensolution {
 private:
     vector<Edge> edgeList;
     vector<Node> spine;
+    vector<Page> book;
     int crossings;
 
 public:
@@ -28,9 +29,6 @@ public:
 
     }
 
-    void setEdgeList(vector<Edge> edgeList) {
-        this->edgeList = edgeList;
-    }
     void setSpine(vector<Node> spine) {
         this->spine = spine;
     }
@@ -38,8 +36,18 @@ public:
         return this->spine;
     }
 
+    void setEdgeList(vector<Edge> edgeList) {
+        this->edgeList = edgeList;
+    }
     vector<Edge> getEdgeList() {
         return this->edgeList;
+    }
+
+    void setBook(vector<Page> book) {
+        this->book = book;
+    }
+    vector<Page> getBook() {
+        return this->book;
     }
 
     void setCrossings(int crossings) {

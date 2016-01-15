@@ -46,8 +46,8 @@ void usage()
 int runAlgorithm(int fileNum, int amount, int* best)
 {
 	// read instance
-	std::string path("../../instances/automatic-");
-	std::string file(path + /*std::to_string(fileNum)*/ + "2.txt");
+	std::string path("../instances/test");
+	std::string file(path + /*std::to_string(fileNum)*/ + ".txt");
 	std::shared_ptr<KPMPInstance> instance(KPMPInstance::readInstance(file));
 
 	unsigned int numVertices = instance->getNumVertices();
@@ -99,7 +99,7 @@ int runAlgorithm(int fileNum, int amount, int* best)
 	Genetic gen(&spine, &edgeList, &book);
 
 
-	gen.createInitialSolutions(10);
+	gen.createInitialSolutions(7);
 
 	int bestCrossings = INT_MAX;
 	int noImprovement = 0;
