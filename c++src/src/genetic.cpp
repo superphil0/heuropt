@@ -49,6 +49,10 @@ void Genetic::createRandomPageAssignment(Gensolution s) {
 		}
 	}*/
 	geneticSolution.push_back(s);
+	for (int i = 0; i < s.getSpine().size(); i++) {
+		cout << s.getSpine()[i].getName() << ":" << s.getSpine()[i].getPosition() << "   ";
+	}
+	cout << endl;
 	//std::cout << "insert at: " << insertAt << endl;
 
 
