@@ -40,6 +40,10 @@ public:
     void createRandomPageAssignment(Gensolution s);
 
     Gensolution merge(Gensolution s1, Gensolution s2) {
+	 cout << "Before merge " << endl;
+	 for (int i = 0; i < s1.getSpine().size(); i++ ) {
+		 cout << s1.getSpine()[i].getName() << "-" << s1.getSpine()[i].getPosition() << endl;
+	 }
         vector<Edge> s1Edges = s1.getEdgeList();
         vector<Edge> s2Edges = s2.getEdgeList();
         vector<Edge> finalEdgeList;
@@ -51,10 +55,7 @@ public:
             if (s1Edges[i].getPage() == s2Edges[i].getPage()) {
                 finalEdgeList.push_back(s1Edges[i]);
             } else {
-
-                // int r = 0 + (rand() % (int)(1 - 0));
                 int r = 0 + (rand() % (int)(1 - 0 + 1));
-                //cout << "r " << r << " ";
                 if (r == 0) {
                     finalEdgeList.push_back(s1Edges[i]);
                 } else {
@@ -65,6 +66,10 @@ public:
         int crossings = Utilities::calculateEdgeCrossing(&finalEdgeList);
 		s.setEdgeList(finalEdgeList);
         s.setCrossings(crossings);
+	 cout << "After node merge " << endl;
+	 for (int i = 0; i < s.getSpine().size(); i++ ) {
+		 cout << s.getSpine()[i].getName() << "-" << s.getSpine()[i].getPosition() << endl;
+	 }
 		return s;
     }
 	

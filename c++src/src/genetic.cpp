@@ -13,8 +13,8 @@ void Genetic::createInitialSolutions(unsigned int noOfSolutions) {
 	for (unsigned int i = 0; i < noOfSolutions; i++) {
 		Gensolution s;
 		Deterministic d(solution, spine, edgeList, book, &totalCrossings);
-		// d.sortSpineDFS();
-		d.sortSpine(0);
+		 d.sortSpineDFS();
+		//d.sortSpine(0);
 		s.setSpine(*spine);
 		//std::cout << "in" << endl;
 		createRandomPageAssignment(s);
@@ -100,11 +100,6 @@ void Genetic::createRandomPageAssignment(Gensolution s) {
 	 cout << "Crossings after Edgeswap: " << s.getCrossings() << endl;
 	geneticSolution.push_back(s);
 
-	//std::cout << "insert at: " << insertAt << endl;
-
-
-
-	//this->geneticSolution.push_back(s);
 	rndSolution.clear();
 }
 
@@ -135,7 +130,6 @@ Gensolution Genetic::iterateOnce()
 		//Edgeswap edgeswap(&spine, &rndSolution, &book, &totalCrossings);
 		vector<Edge> el = child.getEdgeList();
 		int crossings = Utilities::calculateEdgeCrossing(&el);
-		// int crossings = Utilities::calculateEdgeCrossing(&child.getEdgeList());
 		child.setCrossings(crossings);
 		if (crossings < minCrossing) {
 			minCrossing = crossings;
