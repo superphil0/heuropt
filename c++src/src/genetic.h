@@ -43,11 +43,10 @@ public:
         vector<Edge> s1Edges = s1.getEdgeList();
         vector<Edge> s2Edges = s2.getEdgeList();
         vector<Edge> finalEdgeList;
-        vector<Node> finalSpine;
         srand (clock());
-		for (unsigned int i = 0; i < s1.getSpine().size(); i++) {
-			//if(s1.getSpine()[i].get)
-		}
+		vector<Node> spine = mergeSpine(s1.getSpine(), s2.getSpine());
+		Gensolution s;
+		s.setSpine(spine);
         for (unsigned int i = 0; i < s1Edges.size(); i++) {
             if (s1Edges[i].getPage() == s2Edges[i].getPage()) {
                 finalEdgeList.push_back(s1Edges[i]);
@@ -63,15 +62,75 @@ public:
                 }
             }
         }
-		Gensolution s;
         int crossings = Utilities::calculateEdgeCrossing(&finalEdgeList);
 		s.setEdgeList(finalEdgeList);
         s.setCrossings(crossings);
-        for (int i=0; i < finalEdgeList.size(); i++) {
-            //cout << i << "-" << finalEdgeList[i].getPage() << "; ";
-        }
 		return s;
     }
+	
+	vector<Node> mergeSpine(vector<Node> spine1, vector<Node> spine2)
+	{
+		vector<Node> newSpine;
+		int sizeSpine = spine1.size();
+		vector<int> numberCheck(sizeSpine, 0); // check if alle numbers from 0-n-1 have appeared int solution all fields need to be 1
+		vector<bool> positionSet(sizeSpine, false); // check if alle numbers from 0-n-1 have appeared int solution all fields need to be 1
+		
+		// fill everything somehow
+		for (unsigned int i = 0; i < spine1.size(); i++) 
+		{
+                int r = 0 + (rand() % (int)(1 - 0 + 1));
+                if (r == 0) 
+				{
+					if (numberCheck.at(spine1[i].getName()) == 0)
+					{
+						newSpine.push_back(spine1[i]);
+						positionSet.at(i) = true;
+						numberCheck.at(spine1[i].getName())++;
+					}
+                } 
+				else 
+				{
+					if (numberCheck.at(spine1[i].getName()) == 0)
+					{
+						newSpine.push_back(spine1[i]);
+						positionSet.at(i) = true;
+						numberCheck.at(spine1[i].getName())++;
+					}
+                }
+		}
+		// fix double entries
+		int j = 0;
+		while (j < numberCheck.size())
+		{
+			j = 0;
+			for (; j < numberCheck.size(); j++)
+			{
+				if (numberCheck.at(j) == 0)
+				{
+					numberCheck.at(j) = 1;
+					for (unsigned int k = 0; k < newSpine.size(); k++)
+					{
+						if (spine1.at(k).getName() == j)
+						{
+							for (int i = 0; i < positionSet.size(); i++)
+							{
+								if (positionSet.at(i) == false)
+								{
+									spine1.at(k).setPosition(i);
+									newSpine.push_back(spine1.at(k));
+									break;
+								}
+							}
+						break;
+						}
+					}
+					break;
+				}
+			}
+		}
+		return newSpine;
+		
+	}
 
     Gensolution mergePivot(Gensolution s1, Gensolution s2) {
         vector<Edge> s1Edges = s1.getEdgeList();
