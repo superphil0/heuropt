@@ -47,7 +47,7 @@ int runAlgorithm(int fileNum, int amount, int* best)
 {
 	// read instance
 	std::string path("../instances/automatic-");
-	std::string file(path + /*std::to_string(fileNum)*/ + "7.txt");
+	std::string file(path + /*std::to_string(fileNum)*/ + "5.txt");
 	std::shared_ptr<KPMPInstance> instance(KPMPInstance::readInstance(file));
 
 	unsigned int numVertices = instance->getNumVertices();
@@ -112,10 +112,25 @@ int runAlgorithm(int fileNum, int amount, int* best)
 			bestCrossings = bestSolution.getCrossings();
 			noImprovement = 0;
 		} else if (++noImprovement > 2){
+			
+
 			break;
 		}
 	};
 	cout << "BEST --- " << bestCrossings;
+	vector<unsigned int> solutionSpine;
+	for (int i = 0; i < bestSolution.getSpine().size(); i++) {
+		for (int j = 0; j < bestSolution.getSpine().size(); j++) {
+			if (bestSolution.getSpine()[j].getPosition() == i) {
+				solutionSpine.push_back(bestSolution.getSpine()[j].getName());
+			}
+		}
+	}
+	solution->setSpineOrder(solutionSpine);
+	for (int i = 0; i < bestSolution.getEdgeList().size(); i++) {
+		solution->addEdgeOnPage(bestSolution.getEdgeList()[i].getStartNode()->getName(),
+			bestSolution.getEdgeList()[i].getEndNode()->getName(), bestSolution.getEdgeList()[i].getPage());
+	}
 	// gen.iterateOnce();
 	// gen.iterateOnce();
 
@@ -123,6 +138,7 @@ int runAlgorithm(int fileNum, int amount, int* best)
 	//std::cout << "CPU Time: " << getCPUtime() << std::endl;
 	if (bestCrossings < *best)
 	{
+
 		*best = bestCrossings;
 		std::ostringstream tmp;
 		tmp << "solutionswap" << fileNum << ".txt";
