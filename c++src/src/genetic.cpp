@@ -20,14 +20,14 @@ void Genetic::createInitialSolutions(unsigned int noOfSolutions) {
 		createRandomPageAssignment(s);
 	}
 
-	for (int i = 0; i < geneticSolution.size(); i++) {
+	/*for (int i = 0; i < geneticSolution.size(); i++) {
 		vector<Node> sp =  geneticSolution[i].getSpine();
 		for (int j = 0; j < spine->size(); j++) {
 			cout << &sp[j] << " " << sp[j].getName() <<":"<<sp[j].getPosition()<< " - ";
 		}
 		cout << endl;
 	}
-	std::cout << "finished" << endl;
+	std::cout << "finished" << endl;*/
 }
 
 void Genetic::createRandomPageAssignment(Gensolution s) {
@@ -63,10 +63,10 @@ void Genetic::createRandomPageAssignment(Gensolution s) {
 		}
 	}*/
 
-	 for (int i = 0; i < s.getSpine().size(); i++) {
+	 /*for (int i = 0; i < s.getSpine().size(); i++) {
 	 	cout << s.getSpine()[i].getName() << ":" << s.getSpine()[i].getPosition() << "   ";
 	 }
-	 cout << endl;
+	 cout << endl;*/
 	
 	 vector<Edge> tmpEdgeList;
 	 tmpEdgeList = s.getEdgeList();
@@ -75,29 +75,29 @@ void Genetic::createRandomPageAssignment(Gensolution s) {
 	 unsigned int tmpCrossings;
 	 tmpCrossings = s.getCrossings();
 	 unsigned int maxCrossing = UINT_MAX;
-	 cout << "spine address: " << &tmpSpine << endl;
+	 //cout << "spine address: " << &tmpSpine << endl;
 	 Edgeswap e(&tmpSpine, &tmpEdgeList, &tmpBook, &tmpCrossings);
 	 while (maxCrossing > tmpCrossings){
-	 	cout << "swappe: " << maxCrossing << " -> " << tmpCrossings << endl;
+	 	//cout << "swappe: " << maxCrossing << " -> " << tmpCrossings << endl;
 	 	maxCrossing = tmpCrossings;
 	 	e.swap(2, 1);
-	 	for (int i = 0; i < tmpEdgeList.size(); i++) {
+	 	/*for (int i = 0; i < tmpEdgeList.size(); i++) {
 	 		cout << tmpEdgeList[i].getStartNode()->getName() << "-" << tmpEdgeList[i].getEndNode()->getName() <<
 	 		":" << tmpEdgeList[i].getPage() << "  ";
 	 	}
-	 	cout << endl;
+	 	cout << endl;*/
 	 	tmpCrossings = Utilities::calculateEdgeCrossing(&tmpEdgeList);
 	 }
 	
 	 s.setSpine(tmpSpine);
 	 s.setEdgeList(tmpEdgeList);
 	 s.setCrossings(tmpCrossings);
-	 for (int i = 0; i < s.getEdgeList().size(); i++ ) {
+	 /*for (int i = 0; i < s.getEdgeList().size(); i++ ) {
 	 	cout << s.getEdgeList()[i].getStartNode()->getName() << "-" << s.getEdgeList()[i].getEndNode()->getName() <<
 	 	":" << s.getEdgeList()[i].getPage() << endl;
 	 }
 	
-	 cout << "Crossings after Edgeswap: " << s.getCrossings() << endl;
+	 cout << "Crossings after Edgeswap: " << s.getCrossings() << endl;*/
 	geneticSolution.push_back(s);
 
 	rndSolution.clear();
