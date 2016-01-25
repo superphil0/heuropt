@@ -47,7 +47,7 @@ int runAlgorithm(int fileNum, int amount, int* best)
 {
 	// read instance
 	std::string path("../instances/automatic-");
-	std::string file(path + /*std::to_string(fileNum)*/ + "5.txt");
+	std::string file(path + /*std::to_string(fileNum)*/ + "9.txt");
 	std::shared_ptr<KPMPInstance> instance(KPMPInstance::readInstance(file));
 
 	unsigned int numVertices = instance->getNumVertices();
@@ -112,7 +112,7 @@ int runAlgorithm(int fileNum, int amount, int* best)
 			bestCrossings = bestSolution.getCrossings();
 			noImprovement = 0;
 		} else if (++noImprovement > 2){
-			
+
 
 			break;
 		}

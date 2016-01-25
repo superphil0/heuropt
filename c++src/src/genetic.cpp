@@ -55,7 +55,7 @@ void Genetic::createRandomPageAssignment(Gensolution s) {
 	s.setEdgeList(rndSolution);
 	s.setCrossings(crossings);
 	s.setBook(tmpBook);
-	std::cout << "initial crossings " << crossings << endl;
+	//std::cout << "initial crossings " << crossings << endl;
 	/*int insertAt = 0;
 	for (insertAt; insertAt < geneticSolution.size(); insertAt++) {
 		if (geneticSolution[insertAt].getCrossings() > crossings) {
@@ -67,7 +67,7 @@ void Genetic::createRandomPageAssignment(Gensolution s) {
 	 	cout << s.getSpine()[i].getName() << ":" << s.getSpine()[i].getPosition() << "   ";
 	 }
 	 cout << endl;*/
-	
+
 	 vector<Edge> tmpEdgeList;
 	 tmpEdgeList = s.getEdgeList();
 	 vector<Node> tmpSpine;
@@ -88,7 +88,7 @@ void Genetic::createRandomPageAssignment(Gensolution s) {
 	 	cout << endl;*/
 	 	tmpCrossings = Utilities::calculateEdgeCrossing(&tmpEdgeList);
 	 }
-	
+
 	 s.setSpine(tmpSpine);
 	 s.setEdgeList(tmpEdgeList);
 	 s.setCrossings(tmpCrossings);
@@ -96,7 +96,7 @@ void Genetic::createRandomPageAssignment(Gensolution s) {
 	 	cout << s.getEdgeList()[i].getStartNode()->getName() << "-" << s.getEdgeList()[i].getEndNode()->getName() <<
 	 	":" << s.getEdgeList()[i].getPage() << endl;
 	 }
-	
+
 	 cout << "Crossings after Edgeswap: " << s.getCrossings() << endl;*/
 	geneticSolution.push_back(s);
 
